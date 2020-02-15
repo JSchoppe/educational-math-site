@@ -1,0 +1,95 @@
+body
+{
+    background-color: rgb(12, 12, 30);
+    overflow: hidden;
+}
+
+.tab
+{
+    width: min-content;
+    border-radius: 0px 15px 15px 0px;
+    display: flex;
+    background-color: grey;
+    padding: 5px;
+}
+.tab:hover
+{
+    background-color: rgb(197, 175, 175);
+    cursor: pointer;
+}
+.tab *
+{
+    width: 50px;
+    height: 50px;
+}
+#settings-tab
+{
+    background-color: rgb(197, 175, 175);
+    height: 500px;
+    width: 100px;
+    overflow-y: scroll;
+}
+
+.field
+{
+    display: flex;
+    align-items: center;
+    justify-items: center;
+}
+.field *
+{
+    height: 30px;
+}
+
+
+/*Define the static region containing the panes*/
+main
+{
+    z-index: -1;
+
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100vw;
+    height: 100vh;
+
+    display: grid;
+    grid-template-rows: 10fr 10fr 25fr 10fr 45fr;
+    grid-template-columns: 10fr 40fr 50fr;
+    column-gap: 5px;
+    row-gap: 5px;
+}
+#input-fields
+{
+    background-color: darkred;
+    grid-column: 2 / 3;
+    grid-row: 2 / 6;
+}
+#output-graph
+{
+    background-color: green;
+    grid-column: 3 / 4;
+    grid-row: 1 / 4;
+}
+#output-blackboard
+{
+    background-color: black;
+    grid-column: 3 / 4;
+    grid-row: 5 / 6;
+}
+
+#timeline-controls
+{
+    display: flex;
+    justify-content: center;
+    grid-column: 3 / 4;
+    grid-row: 4 / 5;
+}
+.timeline-button
+{
+    background-color: white;
+}
+.timeline-button:hover
+{
+    background-color: grey;
+}
