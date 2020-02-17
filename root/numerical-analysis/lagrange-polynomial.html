@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="/styles/general.css">
     <link rel="stylesheet" type="text/css" href="/styles/visualization-tool.css">
+    <script src="/scripts/globals/polyfill.js"></script>
+    <script src="/scripts/globals/core.js"></script>
     <title>Document</title>
 </head>
 <body>
@@ -49,7 +51,7 @@
             
         </div>
         <div class="pane" id="output-graph">
-
+            <canvas></canvas>
         </div>
         <div class="pane" id="output-blackboard">
             
@@ -69,5 +71,6 @@
             </div>
         </div>
     </main>
+    <script src="/scripts/page-logic/lagrange-polynomial.js"></script>
 </body>
 </html>
