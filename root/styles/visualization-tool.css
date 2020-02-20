@@ -45,7 +45,7 @@ body
 /*Define the static region containing the panes*/
 main
 {
-    z-index: -1;
+    /*z-index: -1;*/
 
     position: absolute;
     top: 0px;
@@ -99,4 +99,22 @@ main
     height: calc(100% - 10px);
     margin: 5px;
     border-radius: 20px;
+}
+
+#title-ribbon
+{
+    grid-column: 2 / 4;
+    grid-row: 1 / 2;
+    display: flex;
+    align-items: center;
+}
+#title-ribbon img
+{
+    height: 100%;
+}
+#title-ribbon h2
+{
+    height: 100%;
+    background-image: url("/images/ribbon-length.svg");
+    background-size: contain;
 }

@@ -2,10 +2,10 @@
 (function()
 {
     const canvas = document.querySelector("canvas");
-    const context = canvas.getContext("2d");
 
-    context.beginPath();
-    context.rect(-50, -50, 150, 100);
-    context.fillStyle = "red";
-    context.fill();
+    let LagrangeGraph = new GraphOutput(canvas);
+
+    LagrangeGraph.DrawGrid();
+    LagrangeGraph.DrawFunction((x)=>{ return Math.cos(x) / 0.5 * x; })
+
 })();

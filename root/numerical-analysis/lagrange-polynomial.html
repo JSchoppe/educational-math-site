@@ -47,8 +47,18 @@
         </div>
     </div>
     <main>
+        <div id="title-ribbon">
+            <img src="/images/ribbon.svg">
+            <h2>Lagrange Interpolating Polynomial</h2>
+        </div>
         <div class="pane" id="input-fields">
-            
+            <h2>Inputs</h2>
+            <div class="vector2-field">
+                <label>X1:</label>
+                <input type="number" id="fname"><br>
+                <label>Y1:</label>
+                <input type="number" id="fname"><br>
+            </div>
         </div>
         <div class="pane" id="output-graph">
             <canvas></canvas>
@@ -58,19 +68,20 @@
         </div>
         <div id="timeline-controls">
             <div class="timeline-button" id="step-start">
-                <img src="/images/ribbon.svg">
+                <img src="/images/step-start.png">
             </div>
             <div class="timeline-button" id="step-back">
-                <img src="/images/placeholder-inverse.png">
+                <img src="/images/step-back.png">
             </div>
             <div class="timeline-button" id="step-forward">
-                <img src="/images/placeholder-inverse.png">
+                <img src="/images/step-forward.png">
             </div>
             <div class="timeline-button" id="step-finish">
-                <img src="/images/placeholder-inverse.png">
+                <img src="/images/step-end.png">
             </div>
         </div>
     </main>
+    <script src="/scripts/instance-objects/graph-output.js"></script>
     <script src="/scripts/page-logic/lagrange-polynomial.js"></script>
 </body>
 </html>
