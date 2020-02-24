@@ -1,3 +1,4 @@
+//#region Public Interface
 /**Contains implementation for features that vary between browsers*/
 const POLYFILL =
 {
@@ -9,7 +10,8 @@ const POLYFILL =
     /**Gets the most precise time available*/
     NOW: function(){ return 0.0; }
 };
-
+//#endregion
+//#region Initialization
 (function()
 {
     // Rendering is implemented using different methods in browsers.
@@ -46,5 +48,5 @@ const POLYFILL =
         { return Date.now() / 1000; }
     }
 })();
-
 Object.freeze(POLYFILL);
+//#endregion

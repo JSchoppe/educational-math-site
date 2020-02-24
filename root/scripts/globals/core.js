@@ -1,12 +1,18 @@
 // Depends on polyfill.js
 
+//#region Public Interface
 /**Contains general website functionality*/
 const CORE = 
 {
     /**Hex strings for common colors*/
     COLOR_PALETTE:
     {
-        
+        GRAPH:
+        {
+            GRID_LINES: "#7F7F7F",
+            Y_AXIS: "#46C846",
+            X_AXIS: "#C84646"
+        }
     },
     /**
      * Calls a function everytime the browsers draws
@@ -29,6 +35,7 @@ const CORE =
      */
     STOP_CALLING_ON_RESIZE: function(callback){}
 };
+//#endregion
 
 (function()
 {
@@ -58,10 +65,11 @@ const CORE =
         // Call every function bound to resize.
         for(let i = 0; i < resizeFunctions.length; i++)
             resizeFunctions[i]();
-    }
+    };
     // Bind to the window's resize event.
     window.addEventListener('resize', onResize);
 
+    //#region Event Binding
     // Define the process which functions are bound to events.
     CORE.CALL_ON_UPDATE = function(callback)
     {
@@ -95,6 +103,7 @@ const CORE =
             if(resizeFunctions[i] === callback)
                 resizeFunctions.splice(i, 1);
     };
+    //#endregion
 })();
 
 Object.freeze(CORE);

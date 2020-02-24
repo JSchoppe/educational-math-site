@@ -115,6 +115,7 @@ main
 #title-ribbon h2
 {
     height: 100%;
+    width: 100%;
     background-image: url("/images/ribbon-length.svg");
     background-size: contain;
 }
