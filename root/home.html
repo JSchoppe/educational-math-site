@@ -4,9 +4,55 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="styles/general.css">
+    <link rel="stylesheet" type="text/css" href="styles/home.css">
+    <script src="scripts/globals/polyfill.js"></script>
+    <script src="scripts/globals/core.js"></script>
     <title>Document</title>
 </head>
 <body>
-    
+    <img id="site-logo" src="images/site-logo.png">
+    <div id="nav-wrapper">
+        <nav class="mobile-collapsed">
+            <a class="category-label" class="category-label-active">
+                <img src="images/placeholder.png">
+                <p>Geometry</p>
+            </a>
+            <a class="category-label">
+                <img src="images/placeholder.png">
+                <p>Rendering</p>
+            </a>
+            <a class="category-label">
+                <img src="images/placeholder.png">
+                <p>Numerical Analysis</p>
+            </a>
+            <a class="category-label">
+                <p>About this Project</p>
+            </a>
+        </nav>
+        <div id="nav-pull-tab">
+            <img src="images/placeholder.png">
+        </div>
+    </div> 
+    <main>
+        <div class="tool-info-wrapper">
+            <div class="title-ribbon">
+                <img src="images/ribbon.svg">
+                <h2>Lagrange Interpolating Polynomial</h2>
+            </div>
+            <div class="tool-content-wrapper">
+                <p>
+                    Shows how to generate a polynomial function that passes through any number of data points.
+                </p>
+                <div class="tool-preview-wrapper">
+                    <canvas id="lagrange-canvas"></canvas>
+                </div>
+                <a class="goto-tool-button">
+                    Explore Lagrange Polynomials
+                </a>
+            </div>
+        </div>
+    </main>
+    <script src="scripts/instance-objects/graph-output.js"></script>
+    <script src="scripts/page-logic/home.js"></script>
 </body>
 </html>

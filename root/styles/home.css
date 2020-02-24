@@ -1,0 +1,135 @@
+
+.category-label
+{
+    display: flex;
+    flex-direction: row;
+    color: white;
+    align-items: center;
+    font-size: 25px;
+    padding: 10px;
+    margin: 5px 0px;
+}
+.category-label img
+{
+    width: 40px; height: 40px;
+    margin-right: 10px;
+}
+
+.title-ribbon
+{
+    height: 60px;
+    display: flex;
+    flex-direction: row;
+}
+.title-ribbon h2
+{
+    background-image: url("/images/ribbon-length.svg");
+    background-size: contain;
+    line-height: 60px;
+    width: calc(100% - 60px);
+}
+.title-ribbon img
+{
+    height: 60px;
+}
+
+.goto-tool-button
+{
+    background-color: green;
+    padding: 10px;
+}
+
+
+/* Only applies to mid to desktop devices. */
+@media only screen and (min-width: 415px)
+{
+    /* The navigation pull tab is mobile only. */
+    #nav-pull-tab { display: none; }
+
+    .category-label
+    {
+        border-radius: 0px 15px 15px 0px;
+    }
+
+    #site-logo
+    {
+        position: fixed;
+        left: 0px; top: 0px;
+        width: 20vw; height: 5vw;
+    }
+    #nav-wrapper
+    {
+        position: fixed;
+        top: 6vw;
+        max-width: 25vw;
+    }
+    .category-label
+    {
+        background-color: red;
+    }
+    .category-label:hover
+    {
+        background-color: rgb(255, 130, 130);
+        cursor: pointer;
+    }
+
+    main
+    {
+        margin-left: 25vw;
+    }
+
+    .tool-content-wrapper
+    {
+        padding-left: 50px;
+    }
+}
+
+/* Only applies to mobile devices. */
+@media only screen and (max-width: 414px)
+{
+    #nav-wrapper
+    {
+        position: fixed;
+        top: 0px;
+    }
+    nav
+    {
+        transition-property: height 1s;
+        background-color: red;
+
+        height: auto;
+        overflow-y: hidden;
+
+    }
+    .mobile-collapsed
+    {
+        height: 0px;
+    }
+    #nav-pull-tab
+    {
+        margin-left: 5px;
+        background-color: red;
+        width: 18vw; height: 18vw;
+        border-radius: 0px 0px 15px 15px;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    #nav-pull-tab img
+    {
+        width: 60%; height: 60%;
+    }
+    #site-logo
+    {
+        position: fixed;
+        right: 0px; top: 0px;
+        width: 80vw; height: 20vw;
+    }
+
+    main
+    {
+        position: absolute;
+        top: 20vw;
+    }
+}
