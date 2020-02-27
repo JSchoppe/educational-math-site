@@ -7,9 +7,10 @@
 
     let LagrangeGraph = new GraphOutput(canvas);
 
-    LagrangeGraph.DrawGrid();
-    LagrangeGraph.SetFunctionSlot((x)=>{ return x*x; }, "Parabola");
-    LagrangeGraph.SetFunctionSlot((x)=>{ return -(x*x); }, "InverseParabola");
-    LagrangeGraph.DrawFunction("Parabola");
+    LagrangeGraph.SetFunctionSlot((x)=>{ return Math.sin(x); }, "Parabola");
+    LagrangeGraph.SetFunctionSlot((x)=>{ return 2*Math.cos(x); }, "Parabola2");
+    LagrangeGraph.DrawGrid(1, 2);
+    LagrangeGraph.DrawFunction("Parabola", 2);
+    LagrangeGraph.DrawFunction("Parabola2", 2);
 
 })();

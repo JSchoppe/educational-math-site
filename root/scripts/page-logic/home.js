@@ -10,8 +10,8 @@
     });
 
     let LagrangeDemoGraph = new GraphOutput(document.querySelector("#lagrange-canvas"));
-
-    LagrangeDemoGraph.DrawGrid();
+    LagrangeDemoGraph.SetInteractable(false);
+    LagrangeDemoGraph.DrawGrid(1, 0.5);
     
 
 })();

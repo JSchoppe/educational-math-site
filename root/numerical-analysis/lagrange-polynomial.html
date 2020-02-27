@@ -10,43 +10,46 @@
     <title>Document</title>
 </head>
 <body>
-    <nav>
-        <div class="tab">
-            <img src="/images/placeholder.png">
-            <img src="/images/placeholder.png">
-        </div>
-    </nav>
-    <div class="pull-out-menu">
-        <div id="settings-tab">
-            <h2>Step Complexity</h2>
-            <div class="boolean-field field">
-                <img src="/images/placeholder.png">
-                <p>Show Variable Placement</p>
-            </div>
-            <div class="boolean-field field">
-                <img src="/images/placeholder.png">
-                <p>Show Term Simplification</p>
-            </div>
-            <h2>Output Panes</h2>
-            <div class="boolean-field field">
-                <img src="/images/placeholder.png">
-                <p>Show Graph</p>
-            </div>
-            <div class="boolean-field field">
-                <img src="/images/placeholder.png">
-                <p>Show Blackboard</p>
-            </div>
-        </div>
-        <div class="tab">
-            <img src="/images/placeholder.png">
-        </div>
-    </div>
-    <div class="pull-out-menu">
-        <div class="tab">
-            <img src="/images/placeholder.png">
-        </div>
-    </div>
     <main>
+        <div class="tabbed-content">
+            <nav>
+                <a href="/home.html">
+                    <div class="tab">
+                        <img src="/images/home.svg">
+                    </div>
+                </a>
+            </nav>
+            <div class="pull-out-menu">
+                <div id="settings-tab" class="hidden">
+                    <h2>Step Complexity</h2>
+                    <div class="boolean-field field">
+                        <img src="/images/placeholder.png">
+                        <p>Show Variable Placement</p>
+                    </div>
+                    <div class="boolean-field field">
+                        <img src="/images/placeholder.png">
+                        <p>Show Term Simplification</p>
+                    </div>
+                    <h2>Output Panes</h2>
+                    <div class="boolean-field field">
+                        <img src="/images/placeholder.png">
+                        <p>Show Graph</p>
+                    </div>
+                    <div class="boolean-field field">
+                        <img src="/images/placeholder.png">
+                        <p>Show Blackboard</p>
+                    </div>
+                </div>
+                <div class="tab">
+                    <img src="/images/placeholder.png">
+                </div>
+            </div>
+            <div class="pull-out-menu">
+                <div class="tab">
+                    <img src="/images/formulas-book.svg">
+                </div>
+            </div>
+        </div>
         <div id="title-ribbon">
             <img src="/images/ribbon.svg">
             <h2>Lagrange Interpolating Polynomial</h2>
@@ -54,7 +57,7 @@
         <div class="pane" id="input-fields">
             <h2>Inputs</h2>
             <div class="vector2-field">
-                <label>X1:</label>
+                <label title="This is a tooltip">X1:</label>
                 <input type="number" id="fname"><br>
                 <label>Y1:</label>
                 <input type="number" id="fname"><br>

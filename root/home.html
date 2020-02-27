@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="styles/general.css">
+    <link rel="stylesheet" type="text/css" href="styles/equation.css">
     <link rel="stylesheet" type="text/css" href="styles/home.css">
     <script src="scripts/globals/polyfill.js"></script>
     <script src="scripts/globals/core.js"></script>
@@ -14,15 +15,15 @@
     <div id="nav-wrapper">
         <nav class="mobile-collapsed">
             <a class="category-label" class="category-label-active">
-                <img src="images/placeholder.png">
+                <img src="images/geometry-triangle.svg">
                 <p>Geometry</p>
             </a>
             <a class="category-label">
-                <img src="images/placeholder.png">
+                <img src="images/rendering-monitor.svg">
                 <p>Rendering</p>
             </a>
             <a class="category-label">
-                <img src="images/placeholder.png">
+                <img src="images/numerical-image.svg">
                 <p>Numerical Analysis</p>
             </a>
             <a class="category-label">
@@ -30,7 +31,7 @@
             </a>
         </nav>
         <div id="nav-pull-tab">
-            <img src="images/placeholder.png">
+            <img src="images/hamburger-menu.svg">
         </div>
     </div> 
     <main>
@@ -40,14 +41,21 @@
                 <h2>Lagrange Interpolating Polynomial</h2>
             </div>
             <div class="tool-content-wrapper">
-                <p>
-                    Shows how to generate a polynomial function that passes through any number of data points.
-                </p>
+                <div>
+                    <p>
+                        Shows how to generate a polynomial function that passes through any number of data points.
+                    </p>
+                    <p class="function">
+                        ⨍(x) = 3x² + 5x
+                        ⨍(2) = 3*2² + 5*2
+                    </p>
+                </div>
                 <div class="tool-preview-wrapper">
                     <canvas id="lagrange-canvas"></canvas>
                 </div>
-                <a class="goto-tool-button">
+                <a href="/numerical-analysis/lagrange-polynomial.html" class="goto-tool-button">
                     Explore Lagrange Polynomials
+                    <img src="/images/pointing-edge-right.svg">
                 </a>
             </div>
         </div>
