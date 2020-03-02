@@ -98,7 +98,8 @@ function GraphOutput(canvasElement)
             {
                 type: INSTRUCTION_TYPE.GRID,
                 startTime: POLYFILL.NOW(),
-                duration: drawDuration
+                duration: drawDuration,
+                onCompletion: callback
             });
             CORE.CALL_ON_UPDATE(update);
         }
@@ -158,7 +159,7 @@ function GraphOutput(canvasElement)
 
     let drawGrid = function(unitSize = 1, interpolant = 1)
     {
-        context.lineWidth = 2;
+        context.lineWidth = 1;
         context.strokeStyle = CORE.COLOR_PALETTE.GRAPH.GRID_LINES;
         for(let x = Math.floor(minX); x <= Math.ceil(maxX); x += unitSize)
         {
@@ -175,7 +176,7 @@ function GraphOutput(canvasElement)
             context.stroke();
         }
 
-        context.lineWidth = 4;
+        context.lineWidth = 3;
 
         context.strokeStyle = CORE.COLOR_PALETTE.GRAPH.X_AXIS;
         context.beginPath();
@@ -225,27 +226,20 @@ function GraphOutput(canvasElement)
         for(let i = 0; i < updateInstructions.length; i++)
         {
             let interpolant = (POLYFILL.NOW() - updateInstructions[i].startTime) / updateInstructions[i].duration;
+            if (interpolant > 1)
+            {
+                interpolant = 1;
+            }
             switch(updateInstructions[i].type)
             {
                 case INSTRUCTION_TYPE.FUNCTION:
-                    if (interpolant > 1)
-                    {
-                        interpolant = 1;
-                    }
                     drawFunction(updateInstructions[i].toDraw, interpolant);
                     break;
                 case INSTRUCTION_TYPE.GRID:
-                    if (interpolant > 1)
-                    {
-                        interpolant = 1;
-                    }
                     drawGrid(1, interpolant);
                     break;
             }
-
-
         }
-
     };
     update = update.bind(this);
 

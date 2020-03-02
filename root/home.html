@@ -14,7 +14,7 @@
     <img id="site-logo" src="images/decorations/site-logo.svg">
     <div id="nav-wrapper">
         <nav class="mobile-collapsed">
-            <a class="category-label" class="category-label-active">
+            <a class="category-label label-active">
                 <img src="images/icons/geometry.svg">
                 <p>Geometry</p>
             </a>
@@ -38,25 +38,144 @@
         <div class="tool-info-wrapper">
             <div class="title-ribbon">
                 <img src="images/decorations/ribbon-left.svg">
+                <h2>Center of Gravity</h2>
+            </div>
+            <div class="tool-content-wrapper">
+                <div class="tool-explanation">
+                    <p>
+                        When a torque is applied to an object it will always rotate
+                        about its center of gravity. This is the average location
+                        of the object's mass. This center of mass can be calculated
+                        by approximating an object shape with primitive shapes where
+                        the center of gravity is easy to calculate. Pivoting about
+                        the center of gravity ensures physics simulations are accurate
+                        to reality.
+                    </p>
+                    <div class="input-output-wrapper">
+                        <div class="input-panel">
+                            <p class="function">
+                                Example Input:
+                            </p>
+                            <p class="function">
+                                Circle r=3/2 @(3/2, 3/2)
+                            </p>
+                            <p class="function">
+                                Rectangle from(3/2, 0) to(9/2, 3)
+                            </p>
+                            <p class="function">
+                                Triangle a(3/2, 3) b(9/2, 3) c(9/2, 4)
+                            </p>
+                            <p class="function">
+                                Hole r=1/2 @(3/2, 3/2)
+                            </p>
+                        </div>
+                        <div class="output-panel">
+                            <p class="function">
+                                Example Output:
+                            </p>
+                            <p class="function">
+                                X = (3π + 66) / (2π + 24)
+                            </p>
+                            <p class="function">
+                                Y = (21π + 296) / (14π + 168)
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="tool-preview-wrapper">
+                    <canvas id="center-of-gravity-canvas"></canvas>
+                </div>
+                <div class="goto-tool-button">
+                    <a href="/numerical-analysis/lagrange-polynomial.html">
+                        Explore Center of Gravity
+                    </a>
+                    <img src="/images/decorations/pointing-edge-right.svg">
+                </div>
+            </div>
+        </div>
+        <div class="tool-info-wrapper">
+            <div class="title-ribbon">
+                <img src="images/decorations/ribbon-left.svg">
                 <h2>Lagrange Interpolating Polynomial</h2>
             </div>
             <div class="tool-content-wrapper">
-                <div>
+                <div class="tool-explanation">
                     <p>
-                        Shows how to generate a polynomial function that passes through any number of data points.
+                        Given a series of coordinates in 2D space, a polynomial function can be
+                        generated that will pass through every coordinate. This can be used to
+                        approximate the value at other data point along the interval.
                     </p>
-                    <p class="function">
-                        ⨍(x) = 3x² + 5x
-                        ⨍(2) = 3*2² + 5*2
-                    </p>
+                    <div class="input-output-wrapper">
+                        <div class="input-panel">
+                            <p class="function">
+                                Example Input: (0, 1), (2, 2), (3, 4)
+                            </p>
+                        </div>
+                        <div class="output-panel">
+                            <p class="function">
+                                Example Output: ⨍(x) = 0.5*x² - 0.5*x + 1
+                            </p>
+                        </div>
+                    </div>
                 </div>
                 <div class="tool-preview-wrapper">
                     <canvas id="lagrange-canvas"></canvas>
                 </div>
-                <a href="/numerical-analysis/lagrange-polynomial.html" class="goto-tool-button">
-                    Explore Lagrange Polynomials
+                <div class="goto-tool-button">
+                    <a href="/numerical-analysis/lagrange-polynomial.html">
+                        Explore Lagrange Polynomials
+                    </a>
                     <img src="/images/decorations/pointing-edge-right.svg">
-                </a>
+                </div>
+            </div>
+        </div>
+        <div class="tool-info-wrapper">
+            <div class="title-ribbon">
+                <img src="images/decorations/ribbon-left.svg">
+                <h2>Spline Generation</h2>
+            </div>
+            <div class="tool-content-wrapper">
+                <div class="tool-explanation">
+                    <p>
+                        Splines are used to connect a series of given points. They are piecewise
+                        meaning that each connection between two points is designated its own
+                        function. Splines are a quick way to generate descriptive curves while
+                        maintaining control over function complexity.
+                    </p>
+                    <div class="input-output-wrapper">
+                        <div class="input-panel">
+                            <p class="function">
+                                Example Input: (0, 0), (1, 1), (2, 4)
+                            </p>
+                            <p class="function">
+                               degree=cubic
+                            </p>
+                            <p class="function">
+                                condition=natural
+                            </p>
+                        </div>
+                        <div class="output-panel">
+                            <p class="function">
+                                Example Output:
+                            </p>
+                            <p class="function">
+                                ⨍(x)[0, 1] = 0.5*x - 0.5*x³
+                            </p>
+                            <p class="function">
+                                ⨍(x)[1, 2] = 1 + 2(x-1) + 3/2(x-1)² - 1/2(x-1)³
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="tool-preview-wrapper">
+                    <canvas id="spline-canvas"></canvas>
+                </div>
+                <div class="goto-tool-button">
+                    <a href="/numerical-analysis/lagrange-polynomial.html">
+                        Explore Spline Generation
+                    </a>
+                    <img src="/images/decorations/pointing-edge-right.svg">
+                </div>
             </div>
         </div>
     </main>

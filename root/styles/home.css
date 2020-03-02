@@ -32,22 +32,42 @@
     height: 60px;
 }
 
-.goto-tool-button img
-{
-    height: 100%;
-}
 .goto-tool-button
 {
-    transition-property: all;
-    transition-duration: 0.4s;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    height: 50px;
+}
+.goto-tool-button a
+{
+    padding-left: 10px;
+    line-height: 50px;
     background-color: green;
-    padding: 10px;
+}
+.goto-tool-button img
+{
+    height: 50px;
 }
 .goto-tool-button:hover
 {
     cursor: pointer;
-    background-color: rgb(0, 235, 0);
-    padding: 15px;
+}
+
+.tool-explanation *
+{
+    margin-bottom: 10px;
+}
+
+.tool-info-wrapper
+{
+    margin-bottom: 50px;
+}
+
+.input-output-wrapper
+{
+    display: flex;
+    justify-content: space-evenly;
 }
 
 
@@ -59,7 +79,12 @@
 
     .category-label
     {
+        background-color: rgb(255, 89, 89);
         border-radius: 0px 40px 40px 0px;
+    }
+    .label-active
+    {
+        background-color: red;
     }
 
     #site-logo
@@ -73,10 +98,6 @@
         position: fixed;
         top: 6vw;
         max-width: 25vw;
-    }
-    .category-label
-    {
-        background-color: red;
     }
     .category-label:hover
     {
@@ -92,8 +113,15 @@
     .tool-content-wrapper
     {
         padding-left: 50px;
+        padding-right: 50px;
         display: grid;
         grid-template-columns: auto auto;
+    }
+
+    canvas
+    {
+        width: 500px;
+        height: 100%;
     }
 }
 
