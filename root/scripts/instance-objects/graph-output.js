@@ -14,9 +14,9 @@ function GraphOutput(canvasElement)
     };
     //#endregion
     //#region Private Structures
-    const GraphFunction = function(func)
+    const GraphObject = function(func)
     {
-        this.f = func;
+        
     };
     //#endregion
     //#region Private Members
@@ -109,22 +109,83 @@ function GraphOutput(canvasElement)
         }
     };
 
-    this.PanToBoundingBox = function(xMin, xMax, yMin, yMax, drawDuration = 1)
+    this.WindowToBoundingBox = function(xMin, xMax, yMin, yMax, duration = 0)
     {
-        if(drawDuration)
+        let panDistanceX = 0.5*(xMin + xMax) - 0.5*(minX + maxX);
+        let panDistanceY = 0.5*(yMin + yMax) - 0.5*(minY + maxY);
+
+        let scaleFactorX = (xMax - xMin) / (maxX - minX);
+        let scaleFactorY = (yMax - yMin) / (maxY - minY);
+
+        let scaleFactor = Math.max(scaleFactorX, scaleFactorY);
+
+        this.Pan(panDistanceX, panDistanceY, duration);
+        this.Zoom(scaleFactor, duration);
+    };
+    this.WindowToBoundingBox = this.WindowToBoundingBox.bind(this);
+
+    this.Pan = function(unitsX, unitsY, panDuration = 0, callback)
+    {
+        let panInstruction = 
         {
-            updateInstructions.push(
-            {
-                type: INSTRUCTION_TYPE.GRID,
-                startTime: POLYFILL.NOW(),
-                duration: drawDuration
-            });
+            startX: 0.5*(maxX + minX),
+            startY: 0.5*(maxY + minY),
+            endX: 0.5*(maxX + minX) + unitsX,
+            endY: 0.5*(maxY + minY) + unitsY,
+            type: INSTRUCTION_TYPE.PAN,
+            startTime: POLYFILL.NOW(),
+            duration: panDuration
+        }
+        if(panDuration)
+        {
+            updateInstructions.push(panInstruction);
             CORE.CALL_ON_UPDATE(update);
         }
         else
         {
-            drawGrid();
+            pan(panInstruction);
         }
+    }
+
+    this.Zoom = function(scaleFactor, zoomDuration = 0, callback)
+    {
+        let zoomInstruction = 
+        {
+            startScale: maxY - minY,
+            endScale: (maxY - minY) * scaleFactor,
+            type: INSTRUCTION_TYPE.ZOOM,
+            startTime: POLYFILL.NOW(),
+            duration: zoomDuration
+        }
+        if(zoomDuration)
+        {
+            updateInstructions.push(zoomInstruction);
+            CORE.CALL_ON_UPDATE(update);
+        }
+        else
+        {
+            zoom(zoomInstruction);
+        }
+    }
+    let zoom = function(zoomInstruction, interpolant = 1)
+    {
+        let currentScale = zoomInstruction.startScale + (zoomInstruction.endScale - zoomInstruction.startScale) * interpolant;
+        let centerY = 0.5*(minY + maxY);
+        minY = centerY - 0.5*currentScale;
+        maxY = centerY + 0.5*currentScale;
+        equalizeAxesScale();
+    };
+
+
+    let pan = function(panInstruction, interpolant = 1)
+    {
+        let currentX = panInstruction.startX + (panInstruction.endX - panInstruction.startX) * interpolant;
+        let currentY = panInstruction.startY + (panInstruction.endY - panInstruction.startY) * interpolant;
+        let deltaX = currentX - 0.5*(minX + maxX);
+        let deltaY = currentY - 0.5*(minY + maxY);
+
+        minX += deltaX; maxX += deltaX;
+        minY += deltaY; maxY += deltaY;
     };
 
 
@@ -230,6 +291,7 @@ function GraphOutput(canvasElement)
             {
                 interpolant = 1;
             }
+            interpolant = CORE.EASE_INTERPOLANT(interpolant);
             switch(updateInstructions[i].type)
             {
                 case INSTRUCTION_TYPE.FUNCTION:
@@ -237,6 +299,12 @@ function GraphOutput(canvasElement)
                     break;
                 case INSTRUCTION_TYPE.GRID:
                     drawGrid(1, interpolant);
+                    break;
+                case INSTRUCTION_TYPE.PAN:
+                    pan(updateInstructions[i], interpolant);
+                    break;
+                case INSTRUCTION_TYPE.ZOOM:
+                    zoom(updateInstructions[i], interpolant);
                     break;
             }
         }

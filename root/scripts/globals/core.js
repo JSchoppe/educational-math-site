@@ -33,7 +33,12 @@ const CORE =
      * Removes a function from the call every time the viewport changes
      * @param {Function} callback The function to stop calling
      */
-    STOP_CALLING_ON_RESIZE: function(callback){}
+    STOP_CALLING_ON_RESIZE: function(callback){},
+    /**
+     * Converts an interpolant to an ease curve
+     * @param {Number} interpolant The interpolant to smoothen
+     */
+    EASE_INTERPOLANT: function(interpolant){ return 0; }
 };
 //#endregion
 
@@ -68,6 +73,21 @@ const CORE =
     };
     // Bind to the window's resize event.
     window.addEventListener('resize', onResize);
+
+    // Define the interpolant smoothing function.
+    CORE.EASE_INTERPOLANT = function(interpolant)
+    {
+        if (interpolant < 0) { return 0; }
+        if (interpolant < 0.5)
+        {
+            return 2 * Math.pow(interpolant, 2);
+        }
+        else if (interpolant < 1)
+        {
+            return 1 - 2 * Math.pow((interpolant - 1), 2);
+        }
+        else { return 1; }
+    };
 
     //#region Event Binding
     // Define the process which functions are bound to events.

@@ -15,6 +15,7 @@
 
     LagrangeDemoGraph.SetFunctionSlot((x)=>{ return 0.5*x*x - 0.5*x + 1; },"Demo")
     LagrangeDemoGraph.SetInteractable(false);
+    LagrangeDemoGraph.WindowToBoundingBox(-1, 4, 0, 5, 3);
     LagrangeDemoGraph.DrawGrid(1, 0.5);
     LagrangeDemoGraph.DrawFunction("Demo", 1);
 
@@ -30,6 +31,6 @@
         else{ return 0; }
     },"Demo");
     SplineDemoGraph.DrawGrid(1, 0.5);
-    SplineDemoGraph.DrawFunction("Demo", 1);
+    SplineDemoGraph.DrawFunction("Demo", 3);
 
 })();
