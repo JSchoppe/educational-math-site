@@ -14,15 +14,15 @@
     <img id="site-logo" src="images/decorations/site-logo.svg">
     <div id="nav-wrapper">
         <nav class="mobile-collapsed">
-            <a class="category-label label-active">
+            <a href="#geometry-start" class="category-label label-active" id="geometry-tab">
                 <img src="images/icons/geometry.svg">
                 <p>Geometry</p>
             </a>
-            <a class="category-label">
+            <a href="#rendering-start" class="category-label" id="rendering-tab">
                 <img src="images/icons/rendering.svg">
                 <p>Rendering</p>
             </a>
-            <a class="category-label">
+            <a href="#numerical-start" class="category-label" id="numerical-tab">
                 <img src="images/icons/numerical-analysis.svg">
                 <p>Numerical Analysis</p>
             </a>
@@ -38,7 +38,7 @@
         <div class="tool-info-wrapper">
             <div class="title-ribbon">
                 <img src="images/decorations/ribbon-left.svg">
-                <h2>Center of Gravity</h2>
+                <h2 id="geometry-start">Center of Gravity</h2>
             </div>
             <div class="tool-content-wrapper">
                 <div class="tool-explanation">
@@ -96,7 +96,58 @@
         <div class="tool-info-wrapper">
             <div class="title-ribbon">
                 <img src="images/decorations/ribbon-left.svg">
-                <h2>Lagrange Interpolating Polynomial</h2>
+                <h2 id="rendering-start">Bezier Curves</h2>
+            </div>
+            <div class="tool-content-wrapper">
+                <div class="tool-explanation">
+                    <p>
+                        Bezier curves are a way to store curves of any shape with
+                        relatively little data. A bezier curve consists of nodes
+                        and control vectors that control the shape of the curve
+                        from node to node. Bezier curves are a great solution for
+                        rendering curves that are self-interesecting, or otherwise
+                        not one-to-one functions on any axis.
+                    </p>
+                    <div class="input-output-wrapper">
+                        <div class="input-panel">
+                            <p class="function">
+                                Example Input:
+                            </p>
+                            <p class="function">
+                                Node(0, 0) Control(0, 1)
+                            </p>
+                            <p class="function">
+                                Control(4, 1) Node(4, 4) Control(4, 6)
+                            </p>
+                            <p class="function">
+                                Control(4, 1) Node(6, 1)
+                            </p>
+                        </div>
+                        <div class="output-panel">
+                            <p class="function">
+                                Example Output:
+                            </p>
+                            <p class="function">
+                               (Graph)
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="tool-preview-wrapper">
+                    <canvas id="bezier-canvas"></canvas>
+                </div>
+                <div class="goto-tool-button">
+                    <a href="/numerical-analysis/lagrange-polynomial.html">
+                        Explore Bezier Curves
+                    </a>
+                    <img src="/images/decorations/pointing-edge-right.svg">
+                </div>
+            </div>
+        </div>
+        <div class="tool-info-wrapper">
+            <div class="title-ribbon">
+                <img src="images/decorations/ribbon-left.svg">
+                <h2 id="numerical-start">Lagrange Interpolating Polynomial</h2>
             </div>
             <div class="tool-content-wrapper">
                 <div class="tool-explanation">

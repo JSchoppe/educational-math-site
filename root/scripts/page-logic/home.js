@@ -12,6 +12,7 @@
     let LagrangeDemoGraph = new GraphOutput(document.querySelector("#lagrange-canvas"));
     let COGDemoGraph = new GraphOutput(document.querySelector("#center-of-gravity-canvas"));
     let SplineDemoGraph = new GraphOutput(document.querySelector("#spline-canvas"));
+    let BezierDemoGraph = new GraphOutput(document.querySelector("#bezier-canvas"));
 
     LagrangeDemoGraph.SetFunctionSlot((x)=>{ return 0.5*x*x - 0.5*x + 1; },"Demo")
     LagrangeDemoGraph.SetInteractable(false);
@@ -32,5 +33,45 @@
     },"Demo");
     SplineDemoGraph.DrawGrid(1, 0.5);
     SplineDemoGraph.DrawFunction("Demo", 3);
+    
+    BezierDemoGraph.DrawGrid(1, 0.5);
+
+    // Pull references for the dynamically restyling tabs.
+    const tabSplitElements = [
+        document.querySelector("#geometry-start"),
+        document.querySelector("#rendering-start"),
+        document.querySelector("#numerical-start")
+    ];
+    const tabSplitTabs = [
+        document.querySelector("#geometry-tab"),
+        document.querySelector("#rendering-tab"),
+        document.querySelector("#numerical-tab")
+    ];
+
+    // TODO: REFACTOR
+    // Define the behavior where the nav tabs will light up as they are passed.
+    CORE.CALL_ON_PAGE_SCROLL(()=>
+    {
+        let halfHeight = window.innerHeight * 0.5;
+        
+        // Determine the farthest content split that is above 50vh.
+        for(let i = 0; i < tabSplitElements.length; i++)
+        {
+            let top = (tabSplitElements[i].getBoundingClientRect()).top;
+            if(top < halfHeight)
+            {
+                tabSplitTabs[i].classList.add("label-active");
+                if(i !== 0)
+                {
+                    tabSplitTabs[i - 1].classList.remove("label-active");
+                }
+                hasPassedActive = true;
+            }
+            else
+            {
+                tabSplitTabs[i].classList.remove("label-active");
+            }
+        }
+    });
 
 })();

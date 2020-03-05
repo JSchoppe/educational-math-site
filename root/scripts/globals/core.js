@@ -35,6 +35,16 @@ const CORE =
      */
     STOP_CALLING_ON_RESIZE: function(callback){},
     /**
+     * Calls a function everytime the viewport is scrolled
+     * @param {Function} callback Takes in no arguments
+     */
+    CALL_ON_PAGE_SCROLL: function(callback){},
+    /**
+     * Removes a function from the call every time the viewport is scrolled
+     * @param {Function} callback The function to stop calling
+     */
+    STOP_CALLING_ON_PAGE_SCROLL: function(callback){},
+    /**
      * Converts an interpolant to an ease curve
      * @param {Number} interpolant The interpolant to smoothen
      */
@@ -48,6 +58,7 @@ const CORE =
     let updateFunctions = [];
     let lastUpdateTime = POLYFILL.NOW();
     let resizeFunctions = [];
+    let scrollFunctions = [];
 
     // Define the update loop.
     let onUpdate = function()
@@ -73,6 +84,15 @@ const CORE =
     };
     // Bind to the window's resize event.
     window.addEventListener('resize', onResize);
+
+    // Define the window scroll action.
+    let onScroll = function()
+    {
+        // Call every function bound to resize.
+        for(let i = 0; i < scrollFunctions.length; i++)
+            scrollFunctions[i]();
+    };
+    window.addEventListener('scroll', onScroll);
 
     // Define the interpolant smoothing function.
     CORE.EASE_INTERPOLANT = function(interpolant)
@@ -122,6 +142,22 @@ const CORE =
         for(let i = 0; i < resizeFunctions.length; i++)
             if(resizeFunctions[i] === callback)
                 resizeFunctions.splice(i, 1);
+    };
+    CORE.CALL_ON_PAGE_SCROLL = function(callback)
+    {
+        // Do not add the function if it is already in the array.
+        for(let i = 0; i < scrollFunctions.length; i++)
+            if(scrollFunctions[i] === callback)
+                return;
+        // Else add the function to the array.
+        scrollFunctions.push(callback);
+    };
+    CORE.STOP_CALLING_ON_PAGE_SCROLL = function(callback)
+    {
+        // Remove any instances of this function from the array.
+        for(let i = 0; i < scrollFunctions.length; i++)
+            if(scrollFunctions[i] === callback)
+                scrollFunctions.splice(i, 1);
     };
     //#endregion
 })();
