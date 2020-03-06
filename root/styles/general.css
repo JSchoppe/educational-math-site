@@ -1,12 +1,11 @@
 /*Load fonts*/
-@font-face
-{
+@font-face{
     font-family: LatinMordernMath;
     src: url("/fonts/latinmodern-math.otf") format("opentype");
 }
 
-*
-{
+/*Set global default style*/
+*{
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     box-sizing: border-box;
     padding: 0px;
@@ -14,22 +13,20 @@
     color: white;
 }
 
-html
-{
+html{
+    /*TODO this will need a polyfill*/
     scroll-behavior: smooth;
 }
 
-body
-{
+body{
     background-color: rgb(12, 12, 30);
 }
 
-.pane
-{
-    border-radius: 25px;
+/*Apply default text stylings*/
+h1, h2, h3, h4, h5, h6{
+    color: white;
 }
 
-h2
-{
-    color: white;
+.pane{
+    border-radius: 25px;
 }

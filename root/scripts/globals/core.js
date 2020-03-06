@@ -45,20 +45,39 @@ const CORE =
      */
     STOP_CALLING_ON_PAGE_SCROLL: function(callback){},
     /**
+     * Calls a function every time the bound element enters the view
+     * @param {HTMLElement} element The element to check if on screen
+     * @param {Function} callback The function to call when the element enters view
+     */
+    CALL_ON_ELEMENT_SCROLL_IN: function(element, callback){},
+    /**
+     * Stops calling a function when an element enters the view
+     * @param {HTMLElement} element the element to unbind
+     */
+    STOP_CALLING_ON_ELEMENT_SCROLL_IN: function(element){},
+    /**
+     * Calls a function every time the bound element exits the view
+     * @param {HTMLElement} element 
+     * @param {Function} callback 
+     */
+    CALL_ON_ELEMENT_SCROLL_OUT: function(element, callback){},
+    /**
      * Converts an interpolant to an ease curve
      * @param {Number} interpolant The interpolant to smoothen
      */
     EASE_INTERPOLANT: function(interpolant){ return 0; }
 };
 //#endregion
-
+//#region Implementation
 (function()
 {
     // Core private variables.
-    let updateFunctions = [];
     let lastUpdateTime = POLYFILL.NOW();
+    let updateFunctions = [];
     let resizeFunctions = [];
     let scrollFunctions = [];
+    let scrollInHandlers = [];
+    let scrollOutHandlers = [];
 
     // Define the update loop.
     let onUpdate = function()
@@ -91,8 +110,39 @@ const CORE =
         // Call every function bound to resize.
         for(let i = 0; i < scrollFunctions.length; i++)
             scrollFunctions[i]();
+
+        // Check for a state change in any of the scroll in handlers.
+        for(let j = 0; j < scrollInHandlers.length; j++)
+        {
+            if(isElementOnPage(scrollInHandlers[j].targetElement) !== scrollInHandlers[j].isVisible)
+            {
+                scrollInHandlers[j].isVisible = !(scrollInHandlers[j].isVisible);
+                if(!scrollInHandlers[j].isVisible)
+                {
+                    scrollInHandlers[j].onTrigger();
+                }
+            }
+        }
     };
     window.addEventListener('scroll', onScroll);
+
+    // Define the scroll into screen mechanism.
+    CORE.CALL_ON_ELEMENT_SCROLL_IN = function(element, callback)
+    {
+        // Add an object that will track this objects visibility state.
+        scrollInHandlers.push(
+        {
+            targetElement: element,
+            isVisible: isElementOnPage(element),
+            onTrigger: callback
+        });
+    };
+    CORE.STOP_CALLING_ON_ELEMENT_SCROLL_IN = function(element)
+    {
+        for(let i = 0; i < scrollInHandlers.length; i++)
+            if(scrollInHandlers[i].element === element)
+                scrollInHandlers.splice(i, 1);
+    };
 
     // Define the interpolant smoothing function.
     CORE.EASE_INTERPOLANT = function(interpolant)
@@ -107,6 +157,19 @@ const CORE =
             return 1 - 2 * Math.pow((interpolant - 1), 2);
         }
         else { return 1; }
+    };
+
+    let isElementOnPage = function(element)
+    {
+        let rect = element.getBoundingClientRect();
+        let isVisible = true;
+        // Check for any conditions where the objects is completely off the screen.
+        if(rect.left < 0 && rect.right < 0){ isVisible = false; }
+        if(rect.left > window.innerWidth && rect.right > window.innerWidth){ isVisible = false; }
+        if(rect.top < 0 && rect.bottom < 0){ isVisible = false; }
+        if(rect.top > window.innerHeight && rect.bottom > window.innerHeight){ isVisible = false; }
+
+        return isVisible;
     };
 
     //#region Event Binding
@@ -161,5 +224,6 @@ const CORE =
     };
     //#endregion
 })();
+//#endregion
 
 Object.freeze(CORE);

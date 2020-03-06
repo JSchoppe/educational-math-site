@@ -1,31 +1,69 @@
 // Define local page behavior for the homepage.
 (function()
 {
-    let nav = document.querySelector("nav");
-    let navPullTab = document.querySelector("#nav-pull-tab");
-
-    navPullTab.addEventListener("click", ()=>
+    //#region Navigation Interaction
+    (function()
     {
-        nav.classList.toggle("mobile-collapsed");
-    });
+        // Get page references.
+        let nav = document.querySelector("nav");
+        let navPullTab = document.querySelector("#nav-pull-tab");
+        let navLabels = document.querySelectorAll(".category-label");
+    
+        // When the mobile user clicks the hamburger menu,
+        // collapse or uncollapse the menu.
+        navPullTab.addEventListener("click", ()=>
+        {
+            nav.classList.toggle("mobile-collapsed");
+        });
+        // When any label is clicked, the mobile menu is collapsed.
+        navLabels.forEach((element) =>
+        {
+            element.addEventListener("click", ()=>
+            {
+                nav.classList.add("mobile-collapsed");
+            });
+        });
+    })();
+    //#endregion
 
-    let LagrangeDemoGraph = new GraphOutput(document.querySelector("#lagrange-canvas"));
-    let COGDemoGraph = new GraphOutput(document.querySelector("#center-of-gravity-canvas"));
+    //#region Center of Gravity Demo
+    (function()
+    {
+        // Get the graph to output to.
+        let Graph = new GraphOutput(document.querySelector("#center-of-gravity-canvas"));
+        // Create the demo animation for center of gravity.
+        Graph.SetInteractable(false);
+        Graph.DrawGrid(1, 0.5);
+    }());
+    //#endregion
+    //#region Bezier Curve Demo
+    (function()
+    {
+        // Get the graph to output to.
+        let Graph = new GraphOutput(document.querySelector("#bezier-canvas"));
+        // Create the demo animation for bezier curves.
+        Graph.DrawGrid(1, 0.5);
+    }());
+    //#endregion
+    //#region Lagrange Polynomial Demo
+    (function()
+    {
+        // Get the graph to output to.
+        let Graph = new GraphOutput(document.querySelector("#lagrange-canvas"));
+        // Create the demo animation for lagrange polynomials.
+        Graph.SetFunctionSlot((x)=>{ return 0.5*x*x - 0.5*x + 1; },"Demo")
+        Graph.SetInteractable(false);
+        Graph.WindowToBoundingBox(-1, 4, 0, 5, 3);
+        Graph.DrawGrid(1, 0.5);
+        Graph.DrawFunction("Demo", 1);
+    }());
+    //#endregion
+    
     let SplineDemoGraph = new GraphOutput(document.querySelector("#spline-canvas"));
-    let BezierDemoGraph = new GraphOutput(document.querySelector("#bezier-canvas"));
-
-    LagrangeDemoGraph.SetFunctionSlot((x)=>{ return 0.5*x*x - 0.5*x + 1; },"Demo")
-    LagrangeDemoGraph.SetInteractable(false);
-    LagrangeDemoGraph.WindowToBoundingBox(-1, 4, 0, 5, 3);
-    LagrangeDemoGraph.DrawGrid(1, 0.5);
-    LagrangeDemoGraph.DrawFunction("Demo", 1);
-
-    COGDemoGraph.SetInteractable(false);
-    COGDemoGraph.DrawGrid(1, 0.5);
     
     SplineDemoGraph.SetInteractable(false);
     SplineDemoGraph.SetFunctionSlot((x)=>
-    { 
+    {
         if(x < 0){ return 0; }
         else if(x < 1){ return 0.5*x + 0.5*x*x*x; }
         else if(x < 2){ return 1 + 2*(x-1) + 1.5*(x-1)*(x-1) - 0.5*(x-1)*(x-1)*(x-1); }
@@ -33,8 +71,6 @@
     },"Demo");
     SplineDemoGraph.DrawGrid(1, 0.5);
     SplineDemoGraph.DrawFunction("Demo", 3);
-    
-    BezierDemoGraph.DrawGrid(1, 0.5);
 
     // Pull references for the dynamically restyling tabs.
     const tabSplitElements = [
@@ -47,6 +83,11 @@
         document.querySelector("#rendering-tab"),
         document.querySelector("#numerical-tab")
     ];
+
+    CORE.CALL_ON_ELEMENT_SCROLL_IN(tabSplitElements[2], ()=>
+    {
+        console.log("scrolled-in-bezier");
+    });
 
     // TODO: REFACTOR
     // Define the behavior where the nav tabs will light up as they are passed.
