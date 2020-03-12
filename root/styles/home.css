@@ -61,6 +61,19 @@
     display: flex;
     justify-content: space-evenly;
 }
+.input-panel{
+    background-color: red;
+    transition-property: all;
+    transition-duration: 1s;
+}
+.output-panel{
+    background-color: green;
+    transition-property: all;
+    transition-duration: 1s;
+}
+.panel-hidden{
+    transform: rotateY(90deg);
+}
 
 
 /* Only applies to mid to desktop devices. */

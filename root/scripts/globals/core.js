@@ -4,14 +4,20 @@
 /**Contains general website functionality*/
 const CORE = 
 {
-    /**Hex strings for common colors*/
+    /**Hex strings for universal colors*/
     COLOR_PALETTE:
     {
+        /**Colors related to the graph*/
         GRAPH:
         {
-            GRID_LINES: "#7F7F7F",
-            Y_AXIS: "#46C846",
-            X_AXIS: "#C84646"
+            /**The color of the normal grid lines*/
+            GRID_LINES: "",
+            /**The color of the vertical Y axis*/
+            Y_AXIS: "",
+            /**The color of the horizontal X axis*/
+            X_AXIS: "",
+            /**The color of nodes*/
+            NODE: ""
         }
     },
     /**
@@ -57,13 +63,18 @@ const CORE =
     STOP_CALLING_ON_ELEMENT_SCROLL_IN: function(element){},
     /**
      * Calls a function every time the bound element exits the view
-     * @param {HTMLElement} element 
-     * @param {Function} callback 
+     * @param {HTMLElement} element The element to check if on screen
+     * @param {Function} callback The function to call when the element exits view
      */
     CALL_ON_ELEMENT_SCROLL_OUT: function(element, callback){},
     /**
-     * Converts an interpolant to an ease curve
-     * @param {Number} interpolant The interpolant to smoothen
+     * Stops calling a function when an elements exits the view
+     * @param {HTMLElement} element the element to unbind
+     */
+    STOP_CALLING_ON_ELEMENT_SCROLL_OUT: function(element){},
+    /**
+     * Converts an interpolant to an ease-in-out curve
+     * @param {Number} interpolant The interpolant to adjust
      */
     EASE_INTERPOLANT: function(interpolant){ return 0; }
 };
@@ -71,16 +82,35 @@ const CORE =
 //#region Implementation
 (function()
 {
-    // Core private variables.
+    //#region Core Private Variables
     let lastUpdateTime = POLYFILL.NOW();
     let updateFunctions = [];
     let resizeFunctions = [];
     let scrollFunctions = [];
     let scrollInHandlers = [];
     let scrollOutHandlers = [];
+    //#endregion
+    //#region Core Private Functions
+    // Checks if an element is at least partially on the page.
+    const isElementOnPage = function(element)
+    {
+        let rect = element.getBoundingClientRect();
 
-    // Define the update loop.
-    let onUpdate = function()
+        // Check for any conditions where the objects is completely off the screen.
+        let isVisible = true;
+        if(rect.left < 0 && rect.right < 0)
+            isVisible = false;
+        else if(rect.left > window.innerWidth && rect.right > window.innerWidth)
+            isVisible = false;
+        else if(rect.top < 0 && rect.bottom < 0)
+            isVisible = false;
+        else if(rect.top > window.innerHeight && rect.bottom > window.innerHeight)
+            isVisible = false;
+
+        return isVisible;
+    };
+    // Define the update loop that is called every drawn frame.
+    const onUpdate = function()
     {
         // Calculate the time that has passed.
         let deltaTime = POLYFILL.NOW() - lastUpdateTime;
@@ -91,88 +121,70 @@ const CORE =
         lastUpdateTime = POLYFILL.NOW();
         POLYFILL.CALL_ON_NEXT_DRAW_CYCLE(onUpdate);
     };
-    // Ignite the update cycle.
-    POLYFILL.CALL_ON_NEXT_DRAW_CYCLE(onUpdate);
-
     // Define the window resize action.
-    let onResize = function()
+    const onResize = function()
     {
         // Call every function bound to resize.
         for(let i = 0; i < resizeFunctions.length; i++)
             resizeFunctions[i]();
     };
-    // Bind to the window's resize event.
-    window.addEventListener('resize', onResize);
-
     // Define the window scroll action.
-    let onScroll = function()
+    const onScroll = function()
     {
         // Call every function bound to resize.
         for(let i = 0; i < scrollFunctions.length; i++)
             scrollFunctions[i]();
 
         // Check for a state change in any of the scroll in handlers.
-        for(let j = 0; j < scrollInHandlers.length; j++)
+        for(i = 0; i < scrollInHandlers.length; i++)
         {
-            if(isElementOnPage(scrollInHandlers[j].targetElement) !== scrollInHandlers[j].isVisible)
+            let isOnPage = isElementOnPage(scrollInHandlers[i].targetElement);
+            if(isOnPage !== scrollInHandlers[i].isVisible)
             {
-                scrollInHandlers[j].isVisible = !(scrollInHandlers[j].isVisible);
-                if(!scrollInHandlers[j].isVisible)
-                {
-                    scrollInHandlers[j].onTrigger();
-                }
+                if(isOnPage)
+                    scrollInHandlers[i].onTrigger();
+                scrollInHandlers[i].isVisible = !(scrollInHandlers[i].isVisible);
+            }
+        }
+
+        // Check for a state change in any of the scroll in handlers.
+        for(i = 0; i < scrollOutHandlers.length; i++)
+        {
+            let isOnPage = isElementOnPage(scrollOutHandlers[i].targetElement);
+            if(isOnPage !== scrollOutHandlers[i].isVisible)
+            {
+                if(!isOnPage)
+                    scrollOutHandlers[i].onTrigger();
+                scrollOutHandlers[i].isVisible = !(scrollOutHandlers[i].isVisible);
             }
         }
     };
-    window.addEventListener('scroll', onScroll);
+    //#endregion
 
-    // Define the scroll into screen mechanism.
-    CORE.CALL_ON_ELEMENT_SCROLL_IN = function(element, callback)
-    {
-        // Add an object that will track this objects visibility state.
-        scrollInHandlers.push(
-        {
-            targetElement: element,
-            isVisible: isElementOnPage(element),
-            onTrigger: callback
-        });
-    };
-    CORE.STOP_CALLING_ON_ELEMENT_SCROLL_IN = function(element)
-    {
-        for(let i = 0; i < scrollInHandlers.length; i++)
-            if(scrollInHandlers[i].element === element)
-                scrollInHandlers.splice(i, 1);
-    };
-
-    // Define the interpolant smoothing function.
+    //#region Define Color Palette
+    CORE.COLOR_PALETTE.GRAPH.GRID_LINES = "#7F7F7F";
+    CORE.COLOR_PALETTE.GRAPH.X_AXIS = "#C84646";
+    CORE.COLOR_PALETTE.GRAPH.Y_AXIS = "#46C846";
+    CORE.COLOR_PALETTE.GRAPH.NODE = "";
+    //#endregion
+    //#region Define Smoothing Functions
     CORE.EASE_INTERPOLANT = function(interpolant)
     {
         if (interpolant < 0) { return 0; }
         if (interpolant < 0.5)
         {
+            // Accelerate up to the midway point.
             return 2 * Math.pow(interpolant, 2);
         }
         else if (interpolant < 1)
         {
+            // Slow down after the midway point.
             return 1 - 2 * Math.pow((interpolant - 1), 2);
         }
         else { return 1; }
     };
-
-    let isElementOnPage = function(element)
-    {
-        let rect = element.getBoundingClientRect();
-        let isVisible = true;
-        // Check for any conditions where the objects is completely off the screen.
-        if(rect.left < 0 && rect.right < 0){ isVisible = false; }
-        if(rect.left > window.innerWidth && rect.right > window.innerWidth){ isVisible = false; }
-        if(rect.top < 0 && rect.bottom < 0){ isVisible = false; }
-        if(rect.top > window.innerHeight && rect.bottom > window.innerHeight){ isVisible = false; }
-
-        return isVisible;
-    };
-
-    //#region Event Binding
+    //#endregion
+    //#region Define Event Binding
     // Define the process which functions are bound to events.
     CORE.CALL_ON_UPDATE = function(callback)
     {
@@ -222,8 +234,57 @@ const CORE =
             if(scrollFunctions[i] === callback)
                 scrollFunctions.splice(i, 1);
     };
+    CORE.CALL_ON_ELEMENT_SCROLL_IN = function(element, callback)
+    {
+        // Do not add the handler if the element already has a handler.
+        for(let i = 0; i < scrollInHandlers.length; i++)
+            if(scrollInHandlers[i].targetElement === element)
+                return;
+        // Else add the handler to the array.
+        scrollInHandlers.push(
+        {
+            targetElement: element,
+            isVisible: isElementOnPage(element),
+            onTrigger: callback
+        });
+    };
+    CORE.STOP_CALLING_ON_ELEMENT_SCROLL_IN = function(element)
+    {
+        for(let i = 0; i < scrollInHandlers.length; i++)
+            if(scrollInHandlers[i].element === element)
+                scrollInHandlers.splice(i, 1);
+    };
+    CORE.CALL_ON_ELEMENT_SCROLL_OUT = function(element, callback)
+    {
+        // Do not add the handler if the element already has a handler.
+        for(let i = 0; i < scrollOutHandlers.length; i++)
+            if(scrollOutHandlers[i].targetElement === element)
+                return;
+        // Else add the handler to the array.
+        scrollOutHandlers.push(
+        {
+            targetElement: element,
+            isVisible: isElementOnPage(element),
+            onTrigger: callback
+        });
+    };
+    CORE.STOP_CALLING_ON_ELEMENT_SCROLL_OUT = function(element)
+    {
+        for(let i = 0; i < scrollOutHandlers.length; i++)
+            if(scrollOutHandlers[i].element === element)
+                scrollOutHandlers.splice(i, 1);
+    };
+    //#endregion
+
+    //#region Initialization
+    // Ignite the update cycle.
+    POLYFILL.CALL_ON_NEXT_DRAW_CYCLE(onUpdate);
+    // Bind to the window's resize event.
+    window.addEventListener('resize', onResize);
+    // Bind to the window's scroll event.
+    window.addEventListener('scroll', onScroll);
+    // Prevent runtime modification to the core during runtime.
+    Object.freeze(CORE);
     //#endregion
 })();
 //#endregion
-
-Object.freeze(CORE);

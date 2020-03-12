@@ -11,7 +11,7 @@ const POLYFILL =
     NOW: function(){ return 0.0; }
 };
 //#endregion
-//#region Initialization
+//#region Implementation
 (function()
 {
     // Rendering is implemented using different methods in browsers.
@@ -47,6 +47,6 @@ const POLYFILL =
         POLYFILL.NOW = function()
         { return Date.now() / 1000; }
     }
+    Object.freeze(POLYFILL);
 })();
-Object.freeze(POLYFILL);
 //#endregion

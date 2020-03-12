@@ -58,19 +58,51 @@
         Graph.DrawFunction("Demo", 1);
     }());
     //#endregion
-    
-    let SplineDemoGraph = new GraphOutput(document.querySelector("#spline-canvas"));
-    
-    SplineDemoGraph.SetInteractable(false);
-    SplineDemoGraph.SetFunctionSlot((x)=>
+    //#region Spline Demo
+    (function()
     {
-        if(x < 0){ return 0; }
-        else if(x < 1){ return 0.5*x + 0.5*x*x*x; }
-        else if(x < 2){ return 1 + 2*(x-1) + 1.5*(x-1)*(x-1) - 0.5*(x-1)*(x-1)*(x-1); }
-        else{ return 0; }
-    },"Demo");
-    SplineDemoGraph.DrawGrid(1, 0.5);
-    SplineDemoGraph.DrawFunction("Demo", 3);
+        // Get the graph to output to.
+        let Graph = new GraphOutput(document.querySelector("#spline-canvas"));
+        // Create the demo animation for splines.
+        Graph.SetInteractable(false);
+        Graph.SetFunctionSlot((x)=>
+        {
+            if(x < 0){ return 0; }
+            else if(x < 1){ return 0.5*x + 0.5*x*x*x; }
+            else if(x < 2){ return 1 + 2*(x-1) + 1.5*(x-1)*(x-1) - 0.5*(x-1)*(x-1)*(x-1); }
+            else{ return 0; }
+        },"Demo");
+        Graph.DrawGrid(1, 0.5);
+        Graph.DrawFunction("Demo", 3);
+    })();
+    //#endregion
+
+    //#region Scroll Effects
+    (document.querySelectorAll(".input-panel")).forEach((element) =>
+    {
+        CORE.CALL_ON_ELEMENT_SCROLL_IN(element, ()=>
+        {
+            element.classList.remove("panel-hidden");
+        });
+        CORE.CALL_ON_ELEMENT_SCROLL_OUT(element, ()=>
+        {
+            element.classList.add("panel-hidden");
+        });
+    });
+    (document.querySelectorAll(".output-panel")).forEach((element) =>
+    {
+        CORE.CALL_ON_ELEMENT_SCROLL_IN(element, ()=>
+        {
+            element.classList.remove("panel-hidden");
+        });
+        CORE.CALL_ON_ELEMENT_SCROLL_OUT(element, ()=>
+        {
+            element.classList.add("panel-hidden");
+        });
+    });
+    //#endregion
+
+
 
     // Pull references for the dynamically restyling tabs.
     const tabSplitElements = [
@@ -83,11 +115,6 @@
         document.querySelector("#rendering-tab"),
         document.querySelector("#numerical-tab")
     ];
-
-    CORE.CALL_ON_ELEMENT_SCROLL_IN(tabSplitElements[2], ()=>
-    {
-        console.log("scrolled-in-bezier");
-    });
 
     // TODO: REFACTOR
     // Define the behavior where the nav tabs will light up as they are passed.
