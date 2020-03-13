@@ -1,83 +1,67 @@
-.timeline-button
-{
-    width: 60px;
-    height: 60px;
-    border-radius: 15px;
-    border: solid grey 3px;
-    background-color: white;
-}
-.timeline-button:hover
-{
-    cursor: pointer;
-    background-color: grey;
-}
-.timeline-button img
-{
-    width: 50px;
-    height: 50px;
-}
-
-body
-{
+body{
+    /*Keep all of the content in view at all times*/
     overflow: hidden;
 }
 
-.pull-out-menu
-{
+.top{
+    /*For items that need to appear in front of other items later in the nodelist*/
+    z-index: 1;
+}
+
+.pull-out-menu{
     display: flex;
     flex-direction: row;
+    height: 60px;
+}
+.hidden{
+    width: 0px;
 }
 
 
-.tabbed-content
-{
+.tabbed-content{
     grid-column: 1 / 2;
     grid-row: 1 / 6;
 }
 
-.tab
-{
-    width: min-content;
+.tab{
+    width: 60px;
+    height: 60px;
     border-radius: 0px 15px 15px 0px;
     display: flex;
     background-color: grey;
     padding: 5px;
 }
-.tab:hover
-{
+.tab:hover{
     background-color: rgb(197, 175, 175);
     cursor: pointer;
 }
-.tab *
-{
+.tab *{
     width: 50px;
     height: 50px;
 }
-#settings-tab
-{
-    background-color: rgb(197, 175, 175);
+#settings-content{
+    background-color: rgb(75, 48, 48);
     height: 500px;
     overflow-y: scroll;
-    overflow-x: visible;
+    overflow-x: hidden;
+}
+#settings-content *{
+    white-space: nowrap;
 }
 
-.field
-{
+.field{
     display: flex;
     align-items: center;
     justify-items: center;
 }
-.field *
-{
+.field *{
     height: 30px;
 }
 
 
-/*Define the static region containing the panes*/
-main
-{
-    /*z-index: -1;*/
-
+/*Define the layout of the panes*/
+main{
+    /*Consume the entire page*/
     position: absolute;
     top: 0px;
     left: 0px;
@@ -85,60 +69,77 @@ main
     height: 100vh;
 
     display: grid;
-    grid-template-rows: 10fr 10fr 25fr 10fr 45fr;
-    grid-template-columns: 10fr 40fr 50fr;
+    grid-template-rows: min-content auto auto min-content 5vw;
+    grid-template-columns: min-content min-content auto;
     column-gap: 5px;
     row-gap: 5px;
 }
-#input-fields
-{
+#input-fields{
+    width: min-content;
     background-color: darkred;
     grid-column: 2 / 3;
     grid-row: 2 / 6;
 }
-#output-graph
-{
+#output-graph{
     background-color: green;
     grid-column: 3 / 4;
     grid-row: 2 / 4;
+    width: 100%;
+    height: 500px;
+    min-height: 30vh;
+    max-height: 50vh;
+    
 }
-#output-blackboard
-{
+#output-graph canvas{
+    width: 100%;
+    height: 100%;
+    margin: 5px;
+    border-radius: 20px;
+}
+
+
+#output-blackboard{
     background-color: black;
     grid-column: 3 / 4;
     grid-row: 5 / 6;
 }
 
-#timeline-controls
-{
+#timeline-controls{
     display: flex;
     justify-content: center;
     grid-column: 3 / 4;
     grid-row: 4 / 5;
 }
-#output-graph canvas
-{
-    width: calc(100% - 10px);
-    height: calc(100% - 10px);
-    margin: 5px;
-    border-radius: 20px;
-}
 
-#title-ribbon
-{
+#title-ribbon{
     grid-column: 2 / 4;
     grid-row: 1 / 2;
+    height: 60px;
     display: flex;
     flex-direction: row;
 }
-#title-ribbon img
-{
-    height: 60px;
-}
-#title-ribbon h2
-{
+#title-ribbon h2{
     background-image: url("/images/decorations/ribbon-middle.svg");
     background-size: contain;
     line-height: 60px;
-    width: 100%;
+    width: calc(100% - 60px);
+}
+#title-ribbon img{
+    height: 60px;
+}
+
+.timeline-button{
+    width: 60px;
+    height: 60px;
+    border-radius: 15px;
+    border: solid grey 3px;
+    background-color: white;
+}
+.timeline-button:hover{
+    cursor: pointer;
+    background-color: grey;
+}
+.timeline-button img{
+    width: 50px;
+    height: 50px;
 }

@@ -4,13 +4,14 @@
     src: url("/fonts/latinmodern-math.otf") format("opentype");
 }
 
-/*Set global default style*/
+/*Global defaults*/
 *{
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #F4F2F3;
+
     box-sizing: border-box;
     padding: 0px;
     margin: 0px;
-    color: white;
 }
 
 html{
@@ -19,14 +20,7 @@ html{
 }
 
 body{
-    background-color: rgb(12, 12, 30);
+    background-color: #230903;
 }
 
-/*Apply default text stylings*/
-h1, h2, h3, h4, h5, h6{
-    color: white;
-}
-
-.pane{
-    border-radius: 25px;
-}
+/*Styling for input elements*/

@@ -76,7 +76,9 @@ const CORE =
      * Converts an interpolant to an ease-in-out curve
      * @param {Number} interpolant The interpolant to adjust
      */
-    EASE_INTERPOLANT: function(interpolant){ return 0; }
+    EASE_INTERPOLANT: function(interpolant){ return 0; },
+    /**Call this when a layout change rescales elements that need to change on resize*/
+    CALL_RESIZE: function(){}
 };
 //#endregion
 //#region Implementation
@@ -273,6 +275,10 @@ const CORE =
         for(let i = 0; i < scrollOutHandlers.length; i++)
             if(scrollOutHandlers[i].element === element)
                 scrollOutHandlers.splice(i, 1);
+    };
+    CORE.CALL_RESIZE = function()
+    {
+        onResize();
     };
     //#endregion
 

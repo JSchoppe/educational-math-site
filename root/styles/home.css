@@ -62,11 +62,15 @@
     justify-content: space-evenly;
 }
 .input-panel{
+    padding: 10px;
+    border-radius: 10px;
     background-color: red;
     transition-property: all;
     transition-duration: 1s;
 }
 .output-panel{
+    padding: 10px;
+    border-radius: 10px;
     background-color: green;
     transition-property: all;
     transition-duration: 1s;
