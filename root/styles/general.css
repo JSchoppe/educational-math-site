@@ -1,26 +1,28 @@
-/*Load fonts*/
+/* Load fonts */
 @font-face{
-    font-family: LatinMordernMath;
+    /* Used for math functions. */
+    font-family: LatinModernMath;
     src: url("/fonts/latinmodern-math.otf") format("opentype");
 }
+@font-face{
+    /* Used for code snippets. */
+    font-family: SourceCodePro;
+    src: url("/fonts/Source_Code_Pro/SourceCodePro.ttf") format("truetype");
+}
 
-/*Global defaults*/
+/* Global defaults */
 *{
+    /* TODO undefined font source(may not exist on end user machine) */
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    color: #F4F2F3;
-
+    color: white;
     box-sizing: border-box;
     padding: 0px;
     margin: 0px;
 }
-
 html{
-    /*TODO this will need a polyfill*/
+    /* TODO this will need a polyfill */
     scroll-behavior: smooth;
 }
-
 body{
-    background-color: #230903;
+    background-color: #020213;
 }
-
-/*Styling for input elements*/

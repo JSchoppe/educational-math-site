@@ -1,32 +1,21 @@
 body{
-    /*Keep all of the content in view at all times*/
+    /* Keep all of the content in view at all times. */
     overflow: hidden;
 }
 
 .top{
-    /*For items that need to appear in front of other items later in the nodelist*/
+    /* For items that need to appear in front of other items later in the dom. */
     z-index: 1;
 }
 
 .pull-out-menu{
     display: flex;
-    flex-direction: row;
     height: 60px;
-}
-.hidden{
-    width: 0px;
-}
-
-
-.tabbed-content{
-    grid-column: 1 / 2;
-    grid-row: 1 / 6;
 }
 
 .tab{
     width: 60px;
     height: 60px;
-    border-radius: 0px 15px 15px 0px;
     display: flex;
     background-color: grey;
     padding: 5px;
@@ -58,62 +47,16 @@ body{
     height: 30px;
 }
 
-
-/*Define the layout of the panes*/
-main{
-    /*Consume the entire page*/
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    width: 100vw;
-    height: 100vh;
-
-    display: grid;
-    grid-template-rows: min-content auto auto min-content 5vw;
-    grid-template-columns: min-content min-content auto;
-    column-gap: 5px;
-    row-gap: 5px;
-}
-#input-fields{
-    width: min-content;
-    background-color: darkred;
-    grid-column: 2 / 3;
-    grid-row: 2 / 6;
-}
-#output-graph{
-    background-color: green;
-    grid-column: 3 / 4;
-    grid-row: 2 / 4;
-    width: 100%;
-    height: 500px;
-    min-height: 30vh;
-    max-height: 50vh;
-    
-}
-#output-graph canvas{
-    width: 100%;
-    height: 100%;
-    margin: 5px;
-    border-radius: 20px;
-}
-
-
 #output-blackboard{
     background-color: black;
-    grid-column: 3 / 4;
-    grid-row: 5 / 6;
 }
 
 #timeline-controls{
     display: flex;
     justify-content: center;
-    grid-column: 3 / 4;
-    grid-row: 4 / 5;
 }
 
 #title-ribbon{
-    grid-column: 2 / 4;
-    grid-row: 1 / 2;
     height: 60px;
     display: flex;
     flex-direction: row;
@@ -142,4 +85,142 @@ main{
 .timeline-button img{
     width: 50px;
     height: 50px;
+}
+
+/* Only applies to mid to desktop devices. */
+@media only screen and (min-width: 415px)
+{
+    /* Define the grid for panes to be placed in. */
+    main{
+        /* Consume the entire page. */
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        width: 100vw;
+        height: 100vh;
+
+        display: grid;
+        grid-template-rows: min-content auto auto min-content 5vw;
+        grid-template-columns: min-content min-content auto;
+        column-gap: 5px;
+        row-gap: 5px;
+    }
+    #input-fields{
+        width: min-content;
+        background-color: darkred;
+        grid-column: 2 / 3;
+        grid-row: 2 / 6;
+    }
+    #output-graph{
+        background-color: green;
+        grid-column: 3 / 4;
+        grid-row: 2 / 4;
+        width: 100%;
+        height: 500px;
+        min-height: 30vh;
+        max-height: 50vh;
+    }
+    #output-graph canvas{
+        width: 100%;
+        height: 100%;
+    }
+    #output-blackboard{
+        grid-column: 3 / 4;
+        grid-row: 5 / 6;
+    }
+    #title-ribbon{
+        grid-column: 2 / 4;
+        grid-row: 1 / 2;
+    }
+    #timeline-controls{
+        grid-column: 3 / 4;
+        grid-row: 4 / 5;
+    }
+    .tabbed-content{
+        grid-column: 1 / 2;
+        grid-row: 1 / 6;
+    }
+    .tab
+    {
+        border-radius: 0px 15px 15px 0px;
+    }
+    .pull-out-menu{
+        flex-direction: row;
+    }
+    .hidden{
+        width: 0px;
+    }
+}
+
+/* Only applies to mobile devices. */
+@media only screen and (max-width: 414px)
+{
+    /* Define the grid for panes to be placed in. */
+    main{
+        /* Consume the entire page. */
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        width: 100vw;
+        height: 100vh;
+
+        display: grid;
+        /* Final auto is used to conceal bottom tabs off the page. */
+        grid-template-rows: 10vh 35vh 35vh 10vh 10vh auto;
+        grid-template-columns: auto;
+        column-gap: 5px;
+        row-gap: 5px;
+    }
+    #title-ribbon{
+        grid-column: 1 / 2;
+        grid-row: 1 / 2;
+    }
+    #input-fields{
+        width: min-content;
+        background-color: darkred;
+        grid-column: 1 / 2;
+        grid-row: 6 / 7;
+    }
+    #output-graph{
+        background-color: green;
+        grid-column: 1 / 2;
+        grid-row: 2 / 3;
+        width: 100%;
+        height: 100%;
+    }
+    #output-graph canvas{
+        width: 100%;
+        height: 100%;
+    }
+    #output-blackboard{
+        grid-column: 1 / 2;
+        grid-row: 3 / 4;
+    }
+    #timeline-controls{
+        grid-column: 1 / 2;
+        grid-row: 4 / 5;
+    }
+    .tabbed-content{
+        grid-column: 1 / 2;
+        grid-row: 5 / 6;
+
+        display: flex;
+        flex-direction: row;
+    }
+    .tab
+    {
+        border-radius: 15px 15px 0px 0px;
+    }
+    .pull-out-menu{
+        flex-direction: column;
+        width: 60px;
+        height: auto;
+    }
+    .top{
+        height: 300px;
+        width: 60px;
+    }
+    .hidden{
+        height: 60px;
+    }
 }

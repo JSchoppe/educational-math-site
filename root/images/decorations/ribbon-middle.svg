@@ -25,9 +25,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="22.627417"
-     inkscape:cx="-11.75346"
-     inkscape:cy="7.9225684"
+     inkscape:zoom="45.254834"
+     inkscape:cx="9.9938841"
+     inkscape:cy="6.7856969"
      inkscape:document-units="px"
      inkscape:current-layer="layer2"
      showgrid="true"
@@ -117,17 +117,17 @@
      id="layer2"
      inkscape:label="Fill Regions">
     <path
-       style="fill:#9ebc9f;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.26458335px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       style="fill:#747de1;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.26458335px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        d="M 4.2333334,3.7041668 H 3.9999996e-8 V 2.9104167 H 4.2333334 Z"
        id="path829"
        inkscape:connector-curvature="0" />
     <path
-       style="fill:#9ebc9f;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.26458335px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       style="fill:#747de1;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.26458335px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        d="M 4.2333334,1.3229167 H 3.9999996e-8 V 0.5291666 H 4.2333334 Z"
        id="path829-6"
        inkscape:connector-curvature="0" />
     <path
-       style="fill:#656256;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.26458335px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       style="fill:#0f1553;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.26458335px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        d="M 3.9999996e-8,2.9104167 H 4.2333335 v -1.5875 H 3.9999996e-8 Z"
        id="path846"
        inkscape:connector-curvature="0" />

@@ -13,8 +13,11 @@
     });
 
 
+    const g = document.querySelector("#settings-icon");
+    let SettingsIcon = new OnOffIcon(g, "on.svg", "off.svg");
 
-
+    g.addEventListener("mouseenter", SettingsIcon.TurnOn);
+    g.addEventListener("mouseleave", SettingsIcon.TurnOff);
 
 
     //#region Get Page References
