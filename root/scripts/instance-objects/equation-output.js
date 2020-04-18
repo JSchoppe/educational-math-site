@@ -8,7 +8,7 @@ function EquationOutput(canvas)
 
     this.AddEquationStep = function(step)
     {
-
+        
     };
 
     this.AdvanceStep = function()
@@ -17,7 +17,7 @@ function EquationOutput(canvas)
     };
     this.ReverseStep = function()
     {
-
+        
     };
 
     let update = function(deltaTime)
