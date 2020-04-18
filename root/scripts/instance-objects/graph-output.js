@@ -329,8 +329,8 @@ function GraphOutput(canvasElement)
     // 
     let onResize = function()
     {
-        canvas.width = canvas.getBoundingClientRect().width;
-        canvas.height = canvas.getBoundingClientRect().height;
+        canvas.width = canvas.getBoundingClientRect().width * window.devicePixelRatio;
+        canvas.height = canvas.getBoundingClientRect().height * window.devicePixelRatio;
         equalizeAxesScale();
         clear();
         this.DrawGrid();
