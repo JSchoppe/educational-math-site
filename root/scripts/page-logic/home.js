@@ -5,9 +5,9 @@
     (function()
     {
         // Get page references.
-        let nav = document.querySelector("nav");
-        let navPullTab = document.querySelector("#nav-pull-tab");
-        let navLabels = document.querySelectorAll(".category-label");
+        const nav = document.querySelector("nav");
+        const navPullTab = document.querySelector("#nav-pull-tab");
+        const navLabels = document.querySelectorAll(".category-label");
     
         // When the mobile user clicks the hamburger menu,
         // collapse or uncollapse the menu.
@@ -30,7 +30,7 @@
     (function()
     {
         // Get the graph to output to.
-        let Graph = new GraphOutput(document.querySelector("#center-of-gravity-canvas"));
+        const Graph = new GraphOutput(document.querySelector("#center-of-gravity-canvas"));
         // Create the demo animation for center of gravity.
         Graph.SetInteractable(false);
         Graph.DrawGrid(1, 0.5);
@@ -40,7 +40,7 @@
     (function()
     {
         // Get the graph to output to.
-        let Graph = new GraphOutput(document.querySelector("#bezier-canvas"));
+        const Graph = new GraphOutput(document.querySelector("#bezier-canvas"));
         // Create the demo animation for bezier curves.
         Graph.DrawGrid(1, 0.5);
     }());
@@ -49,7 +49,7 @@
     (function()
     {
         // Get the graph to output to.
-        let Graph = new GraphOutput(document.querySelector("#lagrange-canvas"));
+        const Graph = new GraphOutput(document.querySelector("#lagrange-canvas"));
         // Create the demo animation for lagrange polynomials.
         Graph.SetFunctionSlot((x)=>{ return 0.5*x*x - 0.5*x + 1; },"Demo")
         Graph.SetInteractable(false);
@@ -62,16 +62,16 @@
     (function()
     {
         // Get the graph to output to.
-        let Graph = new GraphOutput(document.querySelector("#spline-canvas"));
+        const Graph = new GraphOutput(document.querySelector("#spline-canvas"));
         // Create the demo animation for splines.
         Graph.SetInteractable(false);
         Graph.SetFunctionSlot((x)=>
         {
-            if(x < 0){ return 0; }
+            if(x < 0){ return undefined; }
             else if(x < 1){ return 0.5*x + 0.5*x*x*x; }
             else if(x < 2){ return 1 + 2*(x-1) + 1.5*(x-1)*(x-1) - 0.5*(x-1)*(x-1)*(x-1); }
-            else{ return 0; }
-        },"Demo");
+            else{ return undefined; }
+        }, "Demo");
         Graph.DrawGrid(1, 0.5);
         Graph.DrawFunction("Demo", 3);
     })();
@@ -122,7 +122,7 @@
     {
         let halfHeight = window.innerHeight * 0.5;
         
-        // Determine the farthest content split that is above 50vh.
+        // Determine how
         for(let i = 0; i < tabSplitElements.length; i++)
         {
             let top = (tabSplitElements[i].getBoundingClientRect()).top;

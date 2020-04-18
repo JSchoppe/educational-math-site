@@ -1,0 +1,132 @@
+/* Set up the background canvas */
+body{ overflow-x: hidden; }
+canvas{
+    z-index: -1;
+    position: fixed;
+    left: 0px; top: 0px;
+    width: 100vw; height: 100vh;
+}
+
+main{
+    background-color: #020213dd;
+}
+
+main > *{
+    margin-top: 10px;
+}
+
+.goto-button{
+    width: min-content;
+    display: grid;
+    grid-template-rows: auto;
+    grid-template-columns: min-content auto;
+}
+.goto-button p{
+    transition-property: color, background-color;
+    transition-duration: 0.2s;
+
+    font-size: 20px;
+    border-radius: 10px 0px 0px 10px;
+
+    padding-left: 5px;
+    height: 40px;
+    color: black;
+    white-space: nowrap;
+    background-color: white;
+}
+.goto-button svg{
+    grid-column: 2/3;
+    grid-row: 1/2;
+    transition-property: fill;
+    transition-duration: 0.2s;
+
+    height: 40px;
+    width: 40px;
+    fill: white;
+}
+
+.goto-button:hover svg{
+    fill: green;
+}
+.goto-button:hover p{
+    color: white;
+    background-color: green;
+}
+
+@keyframes chevron-cycle{
+    0%{
+        transform: translateX(0px);
+        fill-opacity: 100%;
+    }
+    100%{
+        transform: translateX(60px);
+        fill-opacity: 0%;
+    }
+}
+.chevron-1, .chevron-2, .chevron-3{
+    animation-name: chevron-cycle;
+    animation-iteration-count: infinite;
+    animation-duration: 3s;
+
+    transition-property: animation-duration, animation-delay;
+    transition-duration: 0.2s;
+}
+.chevron-1{ animation-delay: 0s; }
+.chevron-2{ animation-delay: 1s; }
+.chevron-3{ animation-delay: 2s; }
+.goto-button:hover .chevron-1, .goto-button:hover .chevron-2, .goto-button:hover .chevron-3{
+    animation-duration: 1.2s;
+}
+.goto-button:hover .chevron-1{ animation-delay: 0s; }
+.goto-button:hover .chevron-2{ animation-delay: 0.4s; }
+.goto-button:hover .chevron-3{ animation-delay: 0.8s; }
+
+
+
+/* Animate the logo hovering */
+@keyframes logo-hover{
+    0%{ transform: translateY(0vh); }
+    100%{ transform: translateY(-2vh); }
+}
+#site-logo{
+    animation-name: logo-hover;
+    animation-duration: 3s;
+    animation-direction: alternate;
+    animation-iteration-count: infinite;
+    animation-timing-function: ease;
+}
+
+
+/* Only applies to mid to desktop devices */
+@media only screen and (min-width: 415px)
+{
+    main{
+        width: 60vw;
+        margin-left: 20vw;
+        margin-top: 10vh;
+        margin-bottom: 10vh;
+        padding: 1vw;
+        border-radius: 2vw;
+    }
+    #site-logo{
+        width: 40vw;
+        margin-left: 10vw;
+    }
+}
+
+/* Only applies to mobile devices */
+@media only screen and (max-width: 414px)
+{
+    main{
+        width: 90vw;
+        margin-left: 5vw;
+        margin-top: 10vh;
+        margin-bottom: 10vh;
+        padding: 1vw;
+        border-radius: 2vw;
+    }
+    #site-logo{
+        width: 70vw;
+        margin-left: 10vw;
+    }
+}
