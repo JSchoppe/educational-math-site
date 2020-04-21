@@ -8,80 +8,11 @@ canvas{
 }
 
 main{
-    background-color: #020213dd;
+    background-color: #020213df;
 }
 
-main > *{
-    margin-top: 10px;
-}
-
-.goto-button{
-    width: min-content;
-    display: grid;
-    grid-template-rows: auto;
-    grid-template-columns: min-content auto;
-}
-.goto-button p{
-    transition-property: color, background-color;
-    transition-duration: 0.2s;
-
-    font-size: 20px;
-    border-radius: 10px 0px 0px 10px;
-
-    padding-left: 5px;
-    height: 40px;
-    color: black;
-    white-space: nowrap;
-    background-color: white;
-}
-.goto-button svg{
-    grid-column: 2/3;
-    grid-row: 1/2;
-    transition-property: fill;
-    transition-duration: 0.2s;
-
-    height: 40px;
-    width: 40px;
-    fill: white;
-}
-
-.goto-button:hover svg{
-    fill: green;
-}
-.goto-button:hover p{
-    color: white;
-    background-color: green;
-}
-
-@keyframes chevron-cycle{
-    0%{
-        transform: translateX(0px);
-        fill-opacity: 100%;
-    }
-    100%{
-        transform: translateX(60px);
-        fill-opacity: 0%;
-    }
-}
-.chevron-1, .chevron-2, .chevron-3{
-    animation-name: chevron-cycle;
-    animation-iteration-count: infinite;
-    animation-duration: 3s;
-
-    transition-property: animation-duration, animation-delay;
-    transition-duration: 0.2s;
-}
-.chevron-1{ animation-delay: 0s; }
-.chevron-2{ animation-delay: 1s; }
-.chevron-3{ animation-delay: 2s; }
-.goto-button:hover .chevron-1, .goto-button:hover .chevron-2, .goto-button:hover .chevron-3{
-    animation-duration: 1.2s;
-}
-.goto-button:hover .chevron-1{ animation-delay: 0s; }
-.goto-button:hover .chevron-2{ animation-delay: 0.4s; }
-.goto-button:hover .chevron-3{ animation-delay: 0.8s; }
-
-
+h2{ margin-top: 25px; }
+h3{ margin-top: 15px; }
 
 /* Animate the logo hovering */
 @keyframes logo-hover{
@@ -96,6 +27,9 @@ main > *{
     animation-timing-function: ease;
 }
 
+.goto-button{
+    margin-top: 10px;
+}
 
 /* Only applies to mid to desktop devices */
 @media only screen and (min-width: 415px)

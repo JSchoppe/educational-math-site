@@ -1,26 +1,49 @@
 /* Load fonts */
 @font-face{
-    /* Used for math functions. */
+    /* Used for math functions */
     font-family: LatinModernMath;
     src: url("/fonts/latinmodern-math.otf") format("opentype");
 }
 @font-face{
-    /* Used for code snippets. */
+    /* Used for code snippets */
     font-family: SourceCodePro;
     src: url("/fonts/Source_Code_Pro/SourceCodePro.ttf") format("truetype");
+}
+@font-face{
+    font-family: BebasNeue;
+    src: url("/fonts/Bebas_Neue/BebasNeue.ttf") format("truetype");
+}
+@font-face{
+    font-family: RubikMonoOne;
+    src: url("/fonts/Rubik_Mono_One/RubikMonoOne.ttf") format("truetype");
+}
+@font-face{
+    /* Used to draw emphasis to interactable buttons */
+    font-family: DaysOne;
+    src: url("/fonts/Days_One/DaysOne.ttf") format("truetype");
+}
+@font-face{
+    font-family: IMFellDoublePica;
+    src: url("/fonts/IM_Fell_Double_Pica/IMFellDoublePica.ttf") format("truetype");
+}
+@font-face{
+    font-family: Cairo-Regular;
+    src: url("/fonts/Cairo/Cairo-Regular.ttf") format("truetype");
+}
+@font-face{
+    font-family: Cairo-Bold;
+    src: url("/fonts/Cairo/Cairo-Bold.ttf") format("truetype");
 }
 
 /* Global defaults */
 *{
-    /* TODO undefined font source(may not exist on end user machine) */
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: "Cairo-Regular";
     color: white;
     box-sizing: border-box;
     padding: 0px;
     margin: 0px;
 }
 html{
-    /* TODO this will need a polyfill */
     scroll-behavior: smooth;
 }
 body{
@@ -28,6 +51,74 @@ body{
 }
 
 /* General Typography */
-h2{
-    
+h1, h2, h3, h4, h5, h6{
+    font-family: "IMFellDoublePica";
 }
+
+.goto-button{
+    width: min-content;
+    display: grid;
+    grid-template-rows: auto;
+    grid-template-columns: min-content auto;
+}
+.goto-button p{
+    font-family: "DaysOne";
+    transition-property: color, background-color;
+    transition-duration: 0.2s;
+
+    font-size: 20px;
+    font-weight: bold;
+    border-radius: 10px 0px 0px 10px;
+
+    padding-left: 5px;
+    height: 40px;
+    color: black;
+    white-space: nowrap;
+    background-color: white;
+}
+.goto-button svg{
+    grid-column: 2/3;
+    grid-row: 1/2;
+    transition-property: fill;
+    transition-duration: 0.2s;
+
+    height: 40px;
+    width: 40px;
+    fill: white;
+}
+
+.goto-button:hover svg{
+    fill: green;
+}
+.goto-button:hover p{
+    color: white;
+    background-color: green;
+}
+
+/* Animate the chevrons from the buttons */
+@keyframes chevron-cycle{
+    0%{
+        transform: translateX(0px);
+        fill-opacity: 100%;
+    }
+    100%{
+        transform: translateX(60px);
+        fill-opacity: 0%;
+    }
+}
+.chevron-1, .chevron-2, .chevron-3{
+    animation-name: chevron-cycle;
+    animation-iteration-count: infinite;
+    animation-duration: 3s;
+    transition-property: animation-duration, animation-delay;
+    transition-duration: 0.2s;
+}
+.chevron-1{ animation-delay: 0s; }
+.chevron-2{ animation-delay: 1s; }
+.chevron-3{ animation-delay: 2s; }
+.goto-button:hover .chevron-1, .goto-button:hover .chevron-2, .goto-button:hover .chevron-3{
+    animation-duration: 1.2s;
+}
+.goto-button:hover .chevron-1{ animation-delay: 0s; }
+.goto-button:hover .chevron-2{ animation-delay: 0.4s; }
+.goto-button:hover .chevron-3{ animation-delay: 0.8s; }

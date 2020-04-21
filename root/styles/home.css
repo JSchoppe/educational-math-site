@@ -36,28 +36,6 @@
     width: calc(100% - 80px);
 }
 
-/* The link that leads to the interactive tool. */
-.goto-tool-button{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    height: 50px;
-}
-.goto-tool-button a{
-    padding-left: 10px;
-    line-height: 50px;
-    color: black;
-    background-color: white;
-}
-.goto-tool-button img{
-    /* This is the beveled edge of the button. */
-    height: 50px;
-    color: white;
-}
-.goto-tool-button:hover{
-    cursor: pointer;
-}
-
 /* Styling for the tool information. */
 .tool-explanation *{
     /* Add internal spacing. */
@@ -88,6 +66,10 @@
 }
 .panel-hidden{
     transform: rotateY(90deg);
+}
+
+.tool-preview-wrapper{
+    
 }
 
 
