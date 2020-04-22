@@ -329,8 +329,6 @@ function GraphOutput(canvasElement)
     // 
     let onResize = function()
     {
-        canvas.width = canvas.getBoundingClientRect().width * window.devicePixelRatio;
-        canvas.height = canvas.getBoundingClientRect().height * window.devicePixelRatio;
         equalizeAxesScale();
         clear();
         this.DrawGrid();
@@ -382,13 +380,10 @@ function GraphOutput(canvasElement)
     
     //#endregion
     //#region Initialization
-    // Set the canvas to the same number of pixels as its screen space.
-    canvas.width = canvas.getBoundingClientRect().width;
-    canvas.height = canvas.getBoundingClientRect().height;
     // Make the axes scales equal.
+    (new ScalingCanvas(canvasElement)).CallOnSizeChanged(onResize);
     equalizeAxesScale();
     // Bind events to interactions with the canvas
-    CORE.CALL_ON_RESIZE(onResize);
     canvas.addEventListener("mousedown", dragStart);
     canvas.addEventListener("mousemove", dragDuring);
     canvas.addEventListener("wheel", onScrollWheel);
