@@ -1,9 +1,12 @@
 /**
  * Creates an object that handles the animation of an equation.
- * @param {HTMLCanvasElement} canvas where the function will be drawn.
+ * @param {HTMLCanvasElement} canvasElement where the function will be drawn.
  */
-function EquationOutput(canvas)
+function EquationOutput(canvasElement)
 {
+    const canvas = canvasElement;
+    const context = canvasElement.getContext("2d");
+
     let equationSteps = [];
 
     this.AddEquationStep = function(step)
@@ -16,6 +19,11 @@ function EquationOutput(canvas)
 
     };
     this.ReverseStep = function()
+    {
+        
+    };
+
+    this.DrawEquation = function()
     {
         
     };

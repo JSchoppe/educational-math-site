@@ -4,339 +4,250 @@
  */
 function GraphOutput(canvasElement)
 {
-    //#region Private Enums
-    const INSTRUCTION_TYPE =
-    {
-        FUNCTION: 0,
-        GRID: 1,
-        PAN: 2,
-        ZOOM: 3
-    };
-    //#endregion
-    //#region Private Structures
-    const GraphObject = function(func)
-    {
-        
-    };
-    //#endregion
     //#region Private Members
     const canvas = canvasElement;
     const context = canvasElement.getContext("2d");
+    // Stores the unit values at each edge of the canvas.
     let minX = -5; let maxX = 5;
     let minY = -5; let maxY = 5;
-    let functions = {};
-    let updateInstructions = [];
+    // Stores the implementation, animation states, and
+    // draw order of the graph objects, respectively.
+    let drawCommands = {};
+    let drawingProcesses = {};
+    let processOrder = [];
+    // Don't redraw the canvas if all animation states have completed.
+    let isDormant = false;
+    // Stores the current animation state of the viewport.
+    let zoomProcess = null;
+    let panProcess = null;
+    // Stores the state related to direct user interaction.
     let isInteractable = true;
     //#endregion
 
     //#region Public Interface
-    //#region Editing Mathematical Functions
-    /**
-     * Sets a function that this graph can draw
-     * @param {Function} func The f(x) mathematical function
-     * @param {String} slotName The name used to refer to this function
-     */
-    this.SetFunctionSlot = function(func, slotName)
-    {
-        // Set the passed math function to a property of functions.
-        functions[slotName] = func;
-    };
-    /**Clears the list of functions this graph can draw*/
-    this.ClearAllFunctions = function()
-    {
-        // Clear all properties inside local functions.
-        functions = {};
-    };
-    //#endregion
-    /**
-     * Prompts the graph to start drawing a function
-     * @param {String} func The function slot name
-     */
-    this.DrawFunction = function(func, drawDuration = 0, callback)
-    {
-        // Retrieve the function.
-        func = functions[func];
-
-        if(drawDuration)
-        {
-            updateInstructions.push(
-            {
-                type: INSTRUCTION_TYPE.FUNCTION,
-                startTime: POLYFILL.NOW(),
-                duration: drawDuration,
-                toDraw: func
-            });
-            CORE.CALL_ON_UPDATE(update);
-        }
-        else
-        {
-            drawFunction(func);
-        }
-    };
-    /**
-     * Interpolates drawing from one function to another
-     * @param {String} fromSlot The function to start at
-     * @param {String} endSlot The function to end at
-     * @param {Number} [duration] The time in seconds to transition from one graph to another 
-     */
-    this.MorphFunction = function(fromSlot, toSlot, duration = 1)
-    {
-
-    };
-    
-    /**
-     * Draws the unit grid onto the canvas
-     * @param {Number} [step] The unit distance between gridlines
-     * @param {Number} [drawDuration] The time in seconds to draw the grid
-     * @param {Function} [callback] Function to call once the grid has completed drawing
-     */
-    this.DrawGrid = function(step = 1, drawDuration = 0, callback)
-    {
-        if(drawDuration)
-        {
-            updateInstructions.push(
-            {
-                type: INSTRUCTION_TYPE.GRID,
-                startTime: POLYFILL.NOW(),
-                duration: drawDuration,
-                onCompletion: callback
-            });
-            CORE.CALL_ON_UPDATE(update);
-        }
-        else
-        {
-            drawGrid();
-        }
-    };
-
-    this.WindowToBoundingBox = function(xMin, xMax, yMin, yMax, duration = 0)
-    {
-        let panDistanceX = 0.5*(xMin + xMax) - 0.5*(minX + maxX);
-        let panDistanceY = 0.5*(yMin + yMax) - 0.5*(minY + maxY);
-
-        let scaleFactorX = (xMax - xMin) / (maxX - minX);
-        let scaleFactorY = (yMax - yMin) / (maxY - minY);
-
-        let scaleFactor = Math.max(scaleFactorX, scaleFactorY);
-
-        this.Pan(panDistanceX, panDistanceY, duration);
-        this.Zoom(scaleFactor, duration);
-    };
-    this.WindowToBoundingBox = this.WindowToBoundingBox.bind(this);
-
-    this.Pan = function(unitsX, unitsY, panDuration = 0, callback)
-    {
-        let panInstruction = 
-        {
-            startX: 0.5*(maxX + minX),
-            startY: 0.5*(maxY + minY),
-            endX: 0.5*(maxX + minX) + unitsX,
-            endY: 0.5*(maxY + minY) + unitsY,
-            type: INSTRUCTION_TYPE.PAN,
-            startTime: POLYFILL.NOW(),
-            duration: panDuration
-        }
-        if(panDuration)
-        {
-            updateInstructions.push(panInstruction);
-            CORE.CALL_ON_UPDATE(update);
-        }
-        else
-        {
-            pan(panInstruction);
-        }
-    }
-
-    this.Zoom = function(scaleFactor, zoomDuration = 0, callback)
-    {
-        let zoomInstruction = 
-        {
-            startScale: maxY - minY,
-            endScale: (maxY - minY) * scaleFactor,
-            type: INSTRUCTION_TYPE.ZOOM,
-            startTime: POLYFILL.NOW(),
-            duration: zoomDuration
-        }
-        if(zoomDuration)
-        {
-            updateInstructions.push(zoomInstruction);
-            CORE.CALL_ON_UPDATE(update);
-        }
-        else
-        {
-            zoom(zoomInstruction);
-        }
-    }
-    let zoom = function(zoomInstruction, interpolant = 1)
-    {
-        let currentScale = zoomInstruction.startScale + (zoomInstruction.endScale - zoomInstruction.startScale) * interpolant;
-        let centerY = 0.5*(minY + maxY);
-        minY = centerY - 0.5*currentScale;
-        maxY = centerY + 0.5*currentScale;
-        equalizeAxesScale();
-    };
-
-
-    let pan = function(panInstruction, interpolant = 1)
-    {
-        let currentX = panInstruction.startX + (panInstruction.endX - panInstruction.startX) * interpolant;
-        let currentY = panInstruction.startY + (panInstruction.endY - panInstruction.startY) * interpolant;
-        let deltaX = currentX - 0.5*(minX + maxX);
-        let deltaY = currentY - 0.5*(minY + maxY);
-
-        minX += deltaX; maxX += deltaX;
-        minY += deltaY; maxY += deltaY;
-    };
-
-
+    //#region Getters/Setters
+    this.GetContext = function(){ return context; };
+    this.GetCanvas = function(){ return canvas; };
     /**
      * Sets whether user input can directly affect the graph
      * @param {Boolean} isActive When true is passed the user can interact
      */
-    this.SetInteractable = function(isActive)
+    this.SetInteractable = function(isActive){ isInteractable = isActive; };
+    //#endregion
+    //#region Graph Objects
+    /**
+     * Adds a drawer class that will control an object on the graph
+     * @param {Drawer} drawer The object that implements the drawing procedure
+     * @param {String} identity What will be used to refer to this object when drawing or erasing it
+     */
+    this.AddDrawCommand = function(drawer, identity)
     {
-        isInteractable = isActive;
+        // Existing command with same name will be overwritten.
+        drawCommands[identity] = drawer;
+        // Initialize the animation state for this object.
+        drawingProcesses[identity] = 
+        {
+            isDormant: true,
+            isForwards: false,
+            startTime: 0, endTime: 0,
+            completedCallback: null
+        };
+        // Push this new command to the back of the draw order by default.
+        processOrder.push(identity);
+    };
+    /**
+     * Draws an object onto the graph
+     * @param {String} identity The name of the object to be drawn
+     * @param {Number} [duration] The time it will take to draw this object
+     * @param {Function} [callback] A function to call after the object has been drawn
+     */
+    this.DrawObject = function(identity, duration = 0, callback = null)
+    {
+        // Throw an error if the caller forgot to AddDrawCommand or misspelled the id.
+        if(!drawCommands[identity])
+            throw "Graph Output: Attempted to draw nonexistent id: " + identity;
+        else
+        {
+            isDormant = false;
+            // Update the animation state.
+            drawingProcesses[identity] = 
+            {
+                isDormant: false,
+                isForwards: true,
+                startTime: POLYFILL.NOW(),
+                endTime: POLYFILL.NOW() + duration,
+                completedCallback: callback
+            };
+        }
+    };
+    /**
+     * Erases an object from the graph
+     * @param {String} identity The name of the object to be erased
+     * @param {Number} [duration] The time it will take to erase this object
+     * @param {Function} [callback] A function to call after the object has been erased
+     */
+    this.EraseObject = function(identity, duration = 0, callback = null)
+    {
+        // Throw an error if the caller forgot to AddDrawCommand or misspelled the id.
+        if(!drawCommands[identity])
+            throw "Graph Output: Attempted to erase nonexistent id: " + identity;
+        else
+        {
+            isDormant = false;
+            // Update the animation state.
+            drawingProcesses[identity] = 
+            {
+                isDormant: false,
+                isForwards: false,
+                startTime: POLYFILL.NOW(),
+                endTime: POLYFILL.NOW() + duration,
+                completedCallback: callback
+            };
+        }
     };
     //#endregion
-    //#region Private Functions
-
-    let drawFunction = function(f, interpolant = 1)
-    {
-        context.lineWidth = 2;
-        context.strokeStyle = "#FFFFFF";
-
-        context.beginPath();
-        let startX = pixelsToUnitsX(-1);
-        let startY = f(startX);
-        context.moveTo(unitsToPixelsX(startX), unitsToPixelsY(startY));
-        for(let pixel = 0; pixel <= (canvas.width + 1) * interpolant; pixel++)
-        {
-            let inputX = pixelsToUnitsX(pixel);
-            let outputY = f(inputX);
-            context.lineTo(unitsToPixelsX(inputX), unitsToPixelsY(outputY));
-        }
-        context.stroke();
-    };
-
-    let drawGrid = function(unitSize = 1, interpolant = 1)
-    {
-        context.lineWidth = 1;
-        context.strokeStyle = CORE.COLOR_PALETTE.GRAPH.GRID_LINES;
-        for(let x = Math.floor(minX); x <= Math.ceil(maxX); x += unitSize)
-        {
-            context.beginPath();
-            context.moveTo(unitsToPixelsX(x), 0);
-            context.lineTo(unitsToPixelsX(x), canvas.height * interpolant);
-            context.stroke();
-        }
-        for(let y = Math.floor(minY); y <= Math.ceil(maxY); y += unitSize)
-        {
-            context.beginPath();
-            context.moveTo(0, unitsToPixelsY(y));
-            context.lineTo(canvas.width * interpolant, unitsToPixelsY(y));
-            context.stroke();
-        }
-
-        context.lineWidth = 3;
-
-        context.strokeStyle = CORE.COLOR_PALETTE.GRAPH.X_AXIS;
-        context.beginPath();
-        context.moveTo(0, unitsToPixelsY(0));
-        context.lineTo(canvas.width * interpolant, unitsToPixelsY(0));
-        context.stroke();
-
-        context.strokeStyle = CORE.COLOR_PALETTE.GRAPH.Y_AXIS;
-        context.beginPath();
-        context.moveTo(unitsToPixelsX(0), 0);
-        context.lineTo(unitsToPixelsX(0), canvas.height * interpolant);
-        context.stroke();
-    };
-
-    //#region Convert to and from pixel and unit space
-    let unitsToPixelsX = function(unitsX)
+    //#region Conversion for Graph Objects
+    /**
+     * Converts from unit space to pixel space along the x axis
+     * @param {Numbers} unitsX A value along the x axis in unit space
+     */
+    this.UnitsToPixelsX = function(unitsX)
     {
         return (unitsX - minX) / (maxX - minX) * canvas.width;
     };
-    let unitsToPixelsY = function(unitsY)
+    /**
+     * Converts from unit space to pixel space along the y axis
+     * @param {Numbers} unitsY A value along the y axis in unit space
+     */
+    this.UnitsToPixelsY = function(unitsY)
     {
         return canvas.height - (unitsY - minY) / (maxY - minY) * canvas.height;
     };
-    let pixelsToUnitsX = function(pixelsX)
+    /**
+     * Converts from pixel space to unit space along the x axis
+     * @param {Numbers} pixelsX A value along the x axis in pixel space
+     */
+    this.PixelsToUnitsX = function(pixelsX)
     {
         return minX + pixelsX * (maxX - minX) / canvas.width;
     };
-    let pixelsToUnitsY = function(pixelsY)
+    /**
+     * Converts from pixel space to unit space along the y axis
+     * @param {Numbers} pixelsY A value along the y axis in pixel space
+     */
+    this.PixelsToUnitsY = function(pixelsY)
     {
-        return minY + (maxY - minY) * (canvas.height - pixelsY) / pixelsHeight;
+        return minY + (maxY - minY) * (canvas.height - pixelsY) / canvas.height;
     };
     //#endregion
-    
-
-    // Update is called whenever something is being drawn over time.
-    let update = function(deltaTime)
+    //#region Viewport Translation and Scaling
+    /**
+     * Moves the graph so that the given rectangle is inside the viewport
+     * @param {Number} xMin The minimum x value gauranteed visible
+     * @param {Number} xMax The maximum x value gauranteed visible
+     * @param {Number} yMin The minimum y value gauranteed visible
+     * @param {Number} yMax The maximum y value gauranteed visible
+     * @param {Number} [duration] How long it will take to move the viewport
+     * @param {Function} [callback] Function to be called after the process completes
+     */
+    this.WindowToBoundingBox = function(xMin, xMax, yMin, yMax, duration = 0, callback)
     {
-        // If all draw instructions have completed, unbind from update.
-        if(updateInstructions.length === 0)
+        // Calculate the travel edistance.
+        const panDistanceX = 0.5*(xMin + xMax) - 0.5*(minX + maxX);
+        const panDistanceY = 0.5*(yMin + yMax) - 0.5*(minY + maxY);
+        // Choose the more less restrictive scale factor.
+        const scaleFactorX = (xMax - xMin) / (maxX - minX);
+        const scaleFactorY = (yMax - yMin) / (maxY - minY);
+        const scaleFactor = Math.max(scaleFactorX, scaleFactorY);
+        // Begin the pan and zoom procedures, forwarding the given callback.
+        this.Pan(panDistanceX, panDistanceY, duration, callback);
+        this.Zoom(scaleFactor, duration);
+    };
+    this.WindowToBoundingBox = this.WindowToBoundingBox.bind(this);
+    /**
+     * Translates the viewport relative to its current position
+     * @param {Number} unitsX Translation along the x axis
+     * @param {Number} unitsY Translation along the y axis
+     * @param {Number} [duration] How long it will take to complete the pan
+     * @param {Function} [callback] Function to be called after the pan completes  
+     */
+    this.Pan = function(unitsX, unitsY, duration = 0, callback)
+    {
+        // Pass arguments into the current pan process.
+        const currentX = 0.5*(maxX + minX);
+        const currentY = 0.5*(maxY + minY);
+        panProcess = 
         {
-            CORE.STOP_CALLING_ON_UPDATE(update);
-        }
-
-        // Start by clearing the canvas.
-        clear();
-
-        for(let i = 0; i < updateInstructions.length; i++)
+            startX: currentX,
+            startY: currentY,
+            endX: currentX + unitsX,
+            endY: currentY + unitsY,
+            startTime: POLYFILL.NOW(),
+            endTime: POLYFILL.NOW() + duration,
+            completedCallback: callback
+        };
+    };
+    /**
+     * Scales the viewport relative to the current zoom
+     * @param {Number} scaleFactor The new scale relative to the current scale 1
+     * @param {Number} [duration] How long it will take to complete the zoom
+     * @param {Function} [callback] Function to be called after the zoom completes
+     */
+    this.Zoom = function(scaleFactor, duration = 0, callback)
+    {
+        // Pass arguments in the current zoom process.
+        const unitsHeight = maxY - minY;
+        zoomProcess = 
         {
-            let interpolant = (POLYFILL.NOW() - updateInstructions[i].startTime) / updateInstructions[i].duration;
-            if (interpolant > 1)
-            {
-                interpolant = 1;
-            }
-            interpolant = CORE.EASE_INTERPOLANT(interpolant);
-            switch(updateInstructions[i].type)
-            {
-                case INSTRUCTION_TYPE.FUNCTION:
-                    drawFunction(updateInstructions[i].toDraw, interpolant);
-                    break;
-                case INSTRUCTION_TYPE.GRID:
-                    drawGrid(1, interpolant);
-                    break;
-                case INSTRUCTION_TYPE.PAN:
-                    pan(updateInstructions[i], interpolant);
-                    break;
-                case INSTRUCTION_TYPE.ZOOM:
-                    zoom(updateInstructions[i], interpolant);
-                    break;
-            }
-        }
+            startScale: unitsHeight,
+            endScale: unitsHeight * scaleFactor,
+            startTime: POLYFILL.NOW(),
+            endTime: POLYFILL.NOW() + duration,
+            completedCallback: callback
+        };
     };
-    update = update.bind(this);
-
-
-    let clear = function()
+    //#endregion
+    //#endregion
+    //#region Private Functions
+    //#region Viewport Modification
+    const zoom = function(zoom, interpolant = 1)
     {
-        context.clearRect(0, 0, canvas.width, canvas.height);
+        // Rescale the y axis relative to the current center.
+        const currentScale = zoom.startScale + (zoom.endScale - zoom.startScale) * interpolant;
+        const centerY = 0.5*(minY + maxY);
+        minY = centerY - 0.5*currentScale;
+        maxY = centerY + 0.5*currentScale;
+        // Recalculate the x axis.
+        equalizeAxesScale();
     };
-
-    // Resizes the graph's bounding units to equalize X and Y
-    let equalizeAxesScale = function()
+    const pan = function(pan, interpolant = 1)
     {
-        let rangeY = maxY - minY;
-        let rangeX = rangeY * (canvas.width / canvas.height);
-        let currentMiddleX = (minX + maxX) * 0.5;
-        minX = currentMiddleX - 0.5 * rangeX;
-        maxX = currentMiddleX + 0.5 * rangeX;
+        // Calculate where the viewport should current be centered.
+        const currentX = pan.startX + (pan.endX - pan.startX) * interpolant;
+        const currentY = pan.startY + (pan.endY - pan.startY) * interpolant;
+        // Calculate the travel from the current position.
+        const deltaX = currentX - 0.5*(minX + maxX);
+        const deltaY = currentY - 0.5*(minY + maxY);
+        // Apply the pan.
+        minX += deltaX; maxX += deltaX;
+        minY += deltaY; maxY += deltaY;
     };
-    // 
-    let onResize = function()
+    const equalizeAxesScale = function()
+    {
+        // Make the x scale proportional to the y scale.
+        const rangeX = (maxY - minY) * (canvas.width / canvas.height);
+        const centerX = (minX + maxX) * 0.5;
+        minX = centerX - 0.5*rangeX;
+        maxX = centerX + 0.5*rangeX;
+    };
+    //#endregion
+    //#region User Input
+    const onResize = function()
     {
         equalizeAxesScale();
-        clear();
-        this.DrawGrid();
+        isDormant = false;
     };
-    onResize = onResize.bind(this);
-    
-    
-    let onScrollWheel = function(args)
+    const onScrollWheel = function(args)
     {
         if (isInteractable)
         {
@@ -354,16 +265,8 @@ function GraphOutput(canvasElement)
                 minY *= 1.25;
                 maxY *= 1.25;
             }
-            clear();
-            this.DrawGrid();
-            for(const func in functions)
-            {
-                this.DrawFunction(func);
-            }
         }
     };
-    onScrollWheel = onScrollWheel.bind(this);
-    
     
     let dragStartX, dragStartY, minXStart, minYStart, maxXStart, maxYStart;
     let dragStart = function(args)
@@ -377,9 +280,99 @@ function GraphOutput(canvasElement)
     };
     dragStart = dragStart.bind(this);
     dragDuring = dragDuring.bind(this);
-    
+
     //#endregion
+    //#region Update Loop
+    let update = function()
+    {
+        // If there are no changing elements, the canvas
+        // can remain in the same drawn state.
+        if(isDormant){ return; }
+
+        // Clear the previous drawn frame.
+        context.clearRect(0, 0, canvas.width, canvas.height);
+        const now = POLYFILL.NOW();
+        // If everything is dormant this frame, drawing will stop.
+        isDormant = true;
+
+        // Update any panning or zooming first.
+        if(panProcess)
+        {
+            isDormant = false;
+            const interpolant = (now - panProcess.startTime) / (panProcess.endTime - panProcess.startTime);
+            if(interpolant > 1)
+            {
+                // Once the pan is complete, terminate the process.
+                pan(panProcess, 1);
+                panProcess = null;
+            }
+            else
+                pan(panProcess, interpolant);
+        }
+        if(zoomProcess)
+        {
+            isDormant = false;
+            const interpolant = (now - zoomProcess.startTime) / (zoomProcess.endTime - zoomProcess.startTime);
+            if(interpolant > 1)
+            {
+                // Once the zoom is complete, terminate the process.
+                zoom(zoomProcess, 1);
+                zoomProcess = null;
+            }
+            else
+                zoom(zoomProcess, interpolant);
+        }
+
+        // Redraw all objects.
+        for(processID of processOrder)
+        {
+            process = drawingProcesses[processID];
+            command = drawCommands[processID];
+
+            // If the process is dormant only redraw if its in the completed state.
+            if(process.isDormant)
+            {
+                if(process.isForwards)
+                    command.Draw(this, 1);
+            }
+            // Draw the object in its intermediate animation state.
+            else
+            {
+                isDormant = false;
+                let interpolant = (now - process.startTime) / (process.endTime - process.startTime);
+                if(process.isForwards)
+                {
+                    if(interpolant > 1)
+                    {
+                        command.Draw(this, 1);
+                        process.isDormant = true;
+                        if(process.completedCallback)
+                            process.completedCallback();
+                    }
+                    else
+                        command.Draw(this, interpolant);
+                }
+                else
+                {
+                    interpolant = 1 - interpolant;
+                    if(interpolant < 0)
+                    {
+                        process.isDormant = true;
+                        if(process.completedCallback)
+                            process.completedCallback();
+                    }
+                    else
+                        command.Draw(this, interpolant);
+                }
+            }
+        }
+    };
+    update = update.bind(this);
+    //#endregion
+    //#endregion
+
     //#region Initialization
+    CORE.CALL_ON_UPDATE(update);
     // Make the axes scales equal.
     (new ScalingCanvas(canvasElement)).CallOnSizeChanged(onResize);
     equalizeAxesScale();

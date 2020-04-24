@@ -4,7 +4,6 @@
     const Graph = new GraphOutput(document.querySelector("canvas"));
     Graph.SetInteractable(false);
 
-    Graph.SetFunctionSlot((x)=>{ return x + Math.sin(x); }, "Trig");
-    Graph.DrawGrid();
-    Graph.DrawFunction("Trig");
+    Graph.AddDrawCommand(new GridDrawer(1, 4), "grid")
+    Graph.DrawObject("grid");
 })();

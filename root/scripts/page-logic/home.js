@@ -32,8 +32,16 @@
         // Get the graph to output to.
         const Graph = new GraphOutput(document.querySelector("#center-of-gravity-canvas"));
         // Create the demo animation for center of gravity.
-        Graph.SetInteractable(false);
-        Graph.DrawGrid(1, 0.5);
+        Graph.SetInteractable(true);
+        Graph.AddDrawCommand(new GridDrawer(1, 4), "grid");
+        Graph.AddDrawCommand(new FunctionDrawer((x)=>{ return Math.sin(x); }), "sin");
+        Graph.DrawObject("grid", 2, ()=>
+        {
+            Graph.DrawObject("sin", 2, ()=>
+            {
+                Graph.EraseObject("sin", 2);
+            });
+        });
     }());
     //#endregion
     //#region Bezier Curve Demo
@@ -42,7 +50,8 @@
         // Get the graph to output to.
         const Graph = new GraphOutput(document.querySelector("#bezier-canvas"));
         // Create the demo animation for bezier curves.
-        Graph.DrawGrid(1, 0.5);
+        Graph.AddDrawCommand(new GridDrawer(1, 4), "grid");
+        Graph.DrawObject("grid");
     }());
     //#endregion
     //#region Lagrange Polynomial Demo
@@ -51,11 +60,14 @@
         // Get the graph to output to.
         const Graph = new GraphOutput(document.querySelector("#lagrange-canvas"));
         // Create the demo animation for lagrange polynomials.
-        Graph.SetFunctionSlot((x)=>{ return 0.5*x*x - 0.5*x + 1; },"Demo")
+        Graph.AddDrawCommand(new FunctionDrawer((x)=>{ return 0.5*x*x - 0.5*x + 1; }), "lagrange");
+        Graph.AddDrawCommand(new GridDrawer(1, 4), "grid");
+        Graph.DrawObject("grid", 2, ()=>
+        {
+            Graph.DrawObject("lagrange", 2);
+        });
         Graph.SetInteractable(false);
         Graph.WindowToBoundingBox(-1, 4, 0, 5, 3);
-        Graph.DrawGrid(1, 0.5);
-        Graph.DrawFunction("Demo", 1);
     }());
     //#endregion
     //#region Spline Demo
@@ -65,15 +77,19 @@
         const Graph = new GraphOutput(document.querySelector("#spline-canvas"));
         // Create the demo animation for splines.
         Graph.SetInteractable(false);
-        Graph.SetFunctionSlot((x)=>
+        Graph.AddDrawCommand(new FunctionDrawer((x)=>
         {
             if(x < 0){ return undefined; }
             else if(x < 1){ return 0.5*x + 0.5*x*x*x; }
             else if(x < 2){ return 1 + 2*(x-1) + 1.5*(x-1)*(x-1) - 0.5*(x-1)*(x-1)*(x-1); }
             else{ return undefined; }
-        }, "Demo");
-        Graph.DrawGrid(1, 0.5);
-        Graph.DrawFunction("Demo", 3);
+        }), "spline");
+        Graph.AddDrawCommand(new GridDrawer(1, 4), "grid");
+
+        Graph.DrawObject("grid", 2, ()=>
+        {
+            Graph.DrawObject("spline", 2);
+        });
     })();
     //#endregion
 
