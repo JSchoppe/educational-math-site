@@ -54,8 +54,9 @@ const CORE =
      * Calls a function every time the bound element enters the view
      * @param {HTMLElement} element The element to check if on screen
      * @param {Function} callback The function to call when the element enters view
+     * @param {String} [axis] Pass "x" or "y" to only check scroll in one one axis
      */
-    CALL_ON_ELEMENT_SCROLL_IN: function(element, callback){},
+    CALL_ON_ELEMENT_SCROLL_IN: function(element, callback, axis){},
     /**
      * Stops calling a function when an element enters the view
      * @param {HTMLElement} element the element to unbind
@@ -65,8 +66,9 @@ const CORE =
      * Calls a function every time the bound element exits the view
      * @param {HTMLElement} element The element to check if on screen
      * @param {Function} callback The function to call when the element exits view
+     * @param {String} [axis] Pass "x" or "y" to only check scroll in one one axis
      */
-    CALL_ON_ELEMENT_SCROLL_OUT: function(element, callback){},
+    CALL_ON_ELEMENT_SCROLL_OUT: function(element, callback, axis){},
     /**
      * Stops calling a function when an elements exits the view
      * @param {HTMLElement} element the element to unbind
@@ -94,17 +96,26 @@ const CORE =
     //#endregion
     //#region Core Private Functions
     // Checks if an element is at least partially on the page.
-    const isElementOnPage = function(element)
+    const isElementOnPageX = function(element)
     {
-        let rect = element.getBoundingClientRect();
+        const rect = element.getBoundingClientRect();
 
-        // Check for any conditions where the objects is completely off the screen.
+        // Check for any conditions where the object is completely off the screen.
         let isVisible = true;
         if(rect.left < 0 && rect.right < 0)
             isVisible = false;
         else if(rect.left > window.innerWidth && rect.right > window.innerWidth)
             isVisible = false;
-        else if(rect.top < 0 && rect.bottom < 0)
+
+        return isVisible;
+    };
+    const isElementOnPageY = function(element)
+    {
+        const rect = element.getBoundingClientRect();
+
+        // Check for any conditions where the object is completely off the screen.
+        let isVisible = true;
+        if(rect.top < 0 && rect.bottom < 0)
             isVisible = false;
         else if(rect.top > window.innerHeight && rect.bottom > window.innerHeight)
             isVisible = false;
@@ -134,30 +145,47 @@ const CORE =
     const onScroll = function()
     {
         // Call every function bound to resize.
-        for(let i = 0; i < scrollFunctions.length; i++)
-            scrollFunctions[i]();
+        for(scrollFunction of scrollFunctions)
+            scrollFunction();
 
         // Check for a state change in any of the scroll in handlers.
-        for(i = 0; i < scrollInHandlers.length; i++)
+        for(handler of scrollInHandlers)
         {
-            let isOnPage = isElementOnPage(scrollInHandlers[i].targetElement);
-            if(isOnPage !== scrollInHandlers[i].isVisible)
+            let isOnPage = true;
+            if(handler.checkX)
+            {
+                isOnPage = isElementOnPageX(handler.targetElement);
+            }
+            if(handler.checkY && isOnPage)
+            {
+                isOnPage = isElementOnPageY(handler.targetElement);
+            }
+
+            if(isOnPage !== handler.isVisible)
             {
                 if(isOnPage)
-                    scrollInHandlers[i].onTrigger();
-                scrollInHandlers[i].isVisible = !(scrollInHandlers[i].isVisible);
+                    handler.onTrigger();
+                handler.isVisible = !(handler.isVisible);
             }
         }
-
-        // Check for a state change in any of the scroll in handlers.
-        for(i = 0; i < scrollOutHandlers.length; i++)
+        // Check for a state change in any of the scroll out handlers.
+        for(handler of scrollOutHandlers)
         {
-            let isOnPage = isElementOnPage(scrollOutHandlers[i].targetElement);
-            if(isOnPage !== scrollOutHandlers[i].isVisible)
+            let isOnPage = true;
+            if(handler.checkX)
+            {
+                isOnPage = isElementOnPageX(handler.targetElement);
+            }
+            if(handler.checkY && isOnPage)
+            {
+                isOnPage = isElementOnPageY(handler.targetElement);
+            }
+
+            if(isOnPage !== handler.isVisible)
             {
                 if(!isOnPage)
-                    scrollOutHandlers[i].onTrigger();
-                scrollOutHandlers[i].isVisible = !(scrollOutHandlers[i].isVisible);
+                    handler.onTrigger();
+                handler.isVisible = !(handler.isVisible);
             }
         }
     };
@@ -236,19 +264,39 @@ const CORE =
             if(scrollFunctions[i] === callback)
                 scrollFunctions.splice(i, 1);
     };
-    CORE.CALL_ON_ELEMENT_SCROLL_IN = function(element, callback)
+    CORE.CALL_ON_ELEMENT_SCROLL_IN = function(element, callback, axis)
     {
         // Do not add the handler if the element already has a handler.
         for(let i = 0; i < scrollInHandlers.length; i++)
             if(scrollInHandlers[i].targetElement === element)
                 return;
-        // Else add the handler to the array.
-        scrollInHandlers.push(
+        // Else create the new handler.
+        let newHandler = 
         {
             targetElement: element,
-            isVisible: isElementOnPage(element),
             onTrigger: callback
-        });
+        };
+        // Store which axes should be checked.
+        if(axis == "x" || axis == "X")
+        {
+            newHandler.checkX = true;
+            newHandler.checkY = false;
+            newHandler.isVisible = isElementOnPageX(element);
+        }
+        else if(axis == "y" || axis == "Y")
+        {
+            newHandler.checkX = false;
+            newHandler.checkY = true;
+            newHandler.isVisible = isElementOnPageY(element);
+        }
+        else
+        {
+            newHandler.checkX = true;
+            newHandler.checkY = true;
+            newHandler.isVisible = isElementOnPageX(element) && isElementOnPageY(element);
+        }
+        // Add the handler.
+        scrollInHandlers.push(newHandler);
     };
     CORE.STOP_CALLING_ON_ELEMENT_SCROLL_IN = function(element)
     {
@@ -256,19 +304,39 @@ const CORE =
             if(scrollInHandlers[i].element === element)
                 scrollInHandlers.splice(i, 1);
     };
-    CORE.CALL_ON_ELEMENT_SCROLL_OUT = function(element, callback)
+    CORE.CALL_ON_ELEMENT_SCROLL_OUT = function(element, callback, axis)
     {
         // Do not add the handler if the element already has a handler.
         for(let i = 0; i < scrollOutHandlers.length; i++)
             if(scrollOutHandlers[i].targetElement === element)
                 return;
-        // Else add the handler to the array.
-        scrollOutHandlers.push(
+        // Else create the new handler.
+        let newHandler = 
         {
             targetElement: element,
-            isVisible: isElementOnPage(element),
             onTrigger: callback
-        });
+        };
+        // Store which axes should be checked.
+        if(axis == "x" || axis == "X")
+        {
+            newHandler.checkX = true;
+            newHandler.checkY = false;
+            newHandler.isVisible = isElementOnPageX(element);
+        }
+        else if(axis == "y" || axis == "Y")
+        {
+            newHandler.checkX = false;
+            newHandler.checkY = true;
+            newHandler.isVisible = isElementOnPageY(element);
+        }
+        else
+        {
+            newHandler.checkX = true;
+            newHandler.checkY = true;
+            newHandler.isVisible = isElementOnPageX(element) && isElementOnPageY(element);
+        }
+        // Add the handler.
+        scrollOutHandlers.push(newHandler);
     };
     CORE.STOP_CALLING_ON_ELEMENT_SCROLL_OUT = function(element)
     {
