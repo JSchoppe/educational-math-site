@@ -56,6 +56,18 @@ function GraphOutput(canvasElement)
         processOrder.push(identity);
     };
     /**
+     * Removes a drawer from the graph
+     * @param {String} identity The id of the drawer to be removed
+     */
+    this.RemoveDrawCommand = function(identity)
+    {
+        // Allow the command data to be garbage collected.
+        delete drawCommands[identity];
+        delete drawingProcesses[identity];
+        // Remove the process from the draw order.
+        processOrder = processOrder.filter((id)=>{ return id != identity; })
+    };
+    /**
      * Draws an object onto the graph
      * @param {String} identity The name of the object to be drawn
      * @param {Number} [duration] The time it will take to draw this object
@@ -244,7 +256,9 @@ function GraphOutput(canvasElement)
     //#region User Input
     const onResize = function()
     {
+        // Recalculate the sizing of the x axis.
         equalizeAxesScale();
+        // Force a draw cycle.
         isDormant = false;
     };
     const onScrollWheel = function(args)
@@ -380,5 +394,6 @@ function GraphOutput(canvasElement)
     canvas.addEventListener("mousedown", dragStart);
     canvas.addEventListener("mousemove", dragDuring);
     canvas.addEventListener("wheel", onScrollWheel);
+    context.lineCap = "round";
     //#endregion
 }
