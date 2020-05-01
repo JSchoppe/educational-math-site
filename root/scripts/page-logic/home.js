@@ -25,6 +25,67 @@
         });
     })();
     //#endregion
+    //#region Navigation Animation
+    (function()
+    {
+        // Pull references for the dynamically restyling tabs.
+        const tabSplitElements = [
+            document.querySelector("#geometry-start"),
+            document.querySelector("#rendering-start"),
+            document.querySelector("#numerical-start")
+        ];
+        const tabSplitTabs = [
+            document.querySelector("#geometry-tab"),
+            document.querySelector("#rendering-tab"),
+            document.querySelector("#numerical-tab")
+        ];
+        // Define the behavior where the nav tabs will light up as they are passed.
+        // Note: this behavior is broken when there are not enough pages in each section.
+        const onTabsUpdate = function()
+        {
+            // The Y coordinate half way down the viewport(assumed region of focus).
+            const halfHeight = window.innerHeight * 0.5;
+            // Find the furthest section of tools whose start-point is scrolled past the halfway point.
+            let activeIndex;
+            for(activeIndex = 0; activeIndex < tabSplitElements.length; activeIndex++)
+            {
+                if((tabSplitElements[activeIndex].getBoundingClientRect()).top > halfHeight)
+                    break;
+            }
+            activeIndex--;
+            // Trigger the CSS states via class.
+            for(let i = 0; i < tabSplitElements.length; i++)
+            {
+                if(i === activeIndex)
+                    tabSplitTabs[i].classList.add("label-active");
+                else
+                    tabSplitTabs[i].classList.remove("label-active");
+            }
+        };
+        // Bind to events that may change the layout size.
+        CORE.CALL_ON_PAGE_SCROLL(onTabsUpdate);
+        CORE.CALL_ON_RESIZE(onTabsUpdate);
+    })();
+    //#endregion
+
+    //#region Graph Scaling Fix (Desktop)
+    // This needs to be placed before before the graph instantiation
+    // so that it is called first in call on resize.
+    (function()
+    {
+        const graphDivs = document.querySelectorAll(".tool-preview-wrapper");
+        const ioDivs = document.querySelectorAll(".input-output-wrapper");
+
+        CORE.CALL_ON_RESIZE(()=>
+        {
+            for(let i = 0; i < graphDivs.length; i++)
+            {
+                const size = ioDivs[i].getBoundingClientRect().bottom - graphDivs[i].getBoundingClientRect().top
+                graphDivs[i].style.height = size + "px";
+            }
+        });
+    })();
+    //#endregion
 
     //#region Center of Gravity Demo
     (function()
@@ -34,12 +95,9 @@
         // Create the demo animation for center of gravity.
         Graph.SetInteractable(true);
         Graph.AddDrawCommand(new GridDrawer(1, 4), "grid");
-        Graph.AddDrawCommand(new FunctionDrawer((x)=>{ return Math.sin(x); }), "sin");
         Graph.DrawObject("grid", 2, ()=>
         {
-            Graph.DrawObject("sin", 2, ()=>
             {
-                Graph.EraseObject("sin", 2);
             });
         });
     }());
@@ -94,68 +152,16 @@
     //#endregion
 
     //#region Scroll Effects
-    (document.querySelectorAll(".input-panel")).forEach((element) =>
+    (document.querySelectorAll(".tool-info-wrapper")).forEach((element) =>
     {
         CORE.CALL_ON_ELEMENT_SCROLL_IN(element, ()=>
         {
-            element.classList.remove("panel-hidden");
-        });
+            element.classList.remove("panned-offscreen");
+        }, "Y");
         CORE.CALL_ON_ELEMENT_SCROLL_OUT(element, ()=>
         {
-            element.classList.add("panel-hidden");
-        });
-    });
-    (document.querySelectorAll(".output-panel")).forEach((element) =>
-    {
-        CORE.CALL_ON_ELEMENT_SCROLL_IN(element, ()=>
-        {
-            element.classList.remove("panel-hidden");
-        });
-        CORE.CALL_ON_ELEMENT_SCROLL_OUT(element, ()=>
-        {
-            element.classList.add("panel-hidden");
-        });
+            element.classList.add("panned-offscreen");
+        }, "Y");
     });
     //#endregion
-
-
-
-    // Pull references for the dynamically restyling tabs.
-    const tabSplitElements = [
-        document.querySelector("#geometry-start"),
-        document.querySelector("#rendering-start"),
-        document.querySelector("#numerical-start")
-    ];
-    const tabSplitTabs = [
-        document.querySelector("#geometry-tab"),
-        document.querySelector("#rendering-tab"),
-        document.querySelector("#numerical-tab")
-    ];
-
-    // TODO: REFACTOR
-    // Define the behavior where the nav tabs will light up as they are passed.
-    CORE.CALL_ON_PAGE_SCROLL(()=>
-    {
-        let halfHeight = window.innerHeight * 0.5;
-        
-        // Determine how
-        for(let i = 0; i < tabSplitElements.length; i++)
-        {
-            let top = (tabSplitElements[i].getBoundingClientRect()).top;
-            if(top < halfHeight)
-            {
-                tabSplitTabs[i].classList.add("label-active");
-                if(i !== 0)
-                {
-                    tabSplitTabs[i - 1].classList.remove("label-active");
-                }
-                hasPassedActive = true;
-            }
-            else
-            {
-                tabSplitTabs[i].classList.remove("label-active");
-            }
-        }
-    });
-
 })();

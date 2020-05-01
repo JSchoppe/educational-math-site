@@ -1,3 +1,8 @@
+/* Hide objects that scroll in from off screen. */
+body{
+    overflow-x: hidden;
+}
+
 /* The scroll-to-section labels on the left. */
 .category-label{
     transition-property: all;
@@ -44,34 +49,36 @@
 .tool-info-wrapper{
     /* This adds spacing to the next ribbon. */
     margin-bottom: 50px;
+    /* Transform is used to bring the wrapper in from the right. */
+    transition-property: transform;
+    transition-duration: 0.5s;
+    transform: translateX(0vw);
+}
+.panned-offscreen{
+    transform: translateX(100vw);
 }
 
+/* The example input output cards. */
 .input-output-wrapper{
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-evenly;
 }
-.input-panel{
+.input-panel, .output-panel{
     padding: 10px;
     border-radius: 10px;
-    background-color: rgb(14, 14, 53);
     transition-property: all;
     transition-duration: 1s;
 }
+.input-panel{
+    background-color: rgb(14, 14, 53);
+}
 .output-panel{
-    padding: 10px;
-    border-radius: 10px;
     background-color: rgb(33, 63, 83);
-    transition-property: all;
-    transition-duration: 1s;
 }
 .panel-hidden{
     transform: rotateY(90deg);
 }
-
-.tool-preview-wrapper{
-    
-}
-
 
 /* Only applies to mid to desktop devices. */
 @media only screen and (min-width: 415px)
@@ -198,5 +205,9 @@
     canvas{
         width: 100%;
         height: 30vh;
+    }
+
+    .input-panel, .output-panel{
+        width: 90vw;
     }
 }
