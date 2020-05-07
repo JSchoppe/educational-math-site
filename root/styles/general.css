@@ -1,43 +1,18 @@
 /* Load fonts */
-@font-face{
-    /* Used for math functions */
-    font-family: LatinModernMath;
-    src: url("/fonts/latinmodern-math.otf") format("opentype");
-}
-@font-face{
-    /* Used for code snippets */
-    font-family: SourceCodePro;
-    src: url("/fonts/Source_Code_Pro/SourceCodePro.ttf") format("truetype");
-}
-@font-face{
-    font-family: BebasNeue;
-    src: url("/fonts/Bebas_Neue/BebasNeue.ttf") format("truetype");
-}
-@font-face{
-    font-family: RubikMonoOne;
-    src: url("/fonts/Rubik_Mono_One/RubikMonoOne.ttf") format("truetype");
-}
-@font-face{
-    /* Used to draw emphasis to interactable buttons */
-    font-family: DaysOne;
-    src: url("/fonts/Days_One/DaysOne.ttf") format("truetype");
-}
-@font-face{
-    font-family: IMFellDoublePica;
-    src: url("/fonts/IM_Fell_Double_Pica/IMFellDoublePica.ttf") format("truetype");
-}
-@font-face{
-    font-family: Cairo-Regular;
-    src: url("/fonts/Cairo/Cairo-Regular.ttf") format("truetype");
-}
-@font-face{
-    font-family: Cairo-Bold;
-    src: url("/fonts/Cairo/Cairo-Bold.ttf") format("truetype");
-}
+
+/* font-family: 'Source Code Pro', monospace; */
+@import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap');
+/* font-family: 'Cairo', sans-serif; */
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap');
+/* font-family: 'Days One', sans-serif; */
+@import url('https://fonts.googleapis.com/css2?family=Days+One&display=swap');
+/* font-family: 'IM Fell Double Pica', serif; */
+@import url('https://fonts.googleapis.com/css2?family=IM+Fell+Double+Pica&display=swap');
 
 /* Global defaults */
 *{
-    font-family: "Cairo-Regular";
+    font-family: "Cairo", sans-serif;
+    font-weight: 400;
     color: white;
     box-sizing: border-box;
     padding: 0px;
@@ -52,7 +27,7 @@ body{
 
 /* General Typography */
 h1, h2, h3, h4, h5, h6{
-    font-family: "IMFellDoublePica";
+    font-family: "IM Fell Double Pica", serif;
 }
 
 .goto-button{
@@ -62,7 +37,7 @@ h1, h2, h3, h4, h5, h6{
     grid-template-columns: min-content auto;
 }
 .goto-button p{
-    font-family: "DaysOne";
+    font-family: "Days One", sans-serif;
     transition-property: color, background-color;
     transition-duration: 0.2s;
 
