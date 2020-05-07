@@ -11,7 +11,7 @@
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    width="16"
    height="16"
-   viewBox="0 0 4.2333333 4.2333335"
+   viewBox="0 0 16 16"
    version="1.1"
    id="svg8"
    inkscape:version="0.92.4 (5da689c313, 2019-01-14)"
@@ -26,8 +26,8 @@
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
      inkscape:zoom="32"
-     inkscape:cx="8.524115"
-     inkscape:cy="7.8368161"
+     inkscape:cx="7.2073559"
+     inkscape:cy="11.26553"
      inkscape:document-units="px"
      inkscape:current-layer="layer2"
      showgrid="true"
@@ -43,7 +43,8 @@
      inkscape:snap-bbox="false"
      inkscape:object-paths="true"
      inkscape:snap-grids="true"
-     inkscape:snap-global="true">
+     inkscape:snap-global="true"
+     inkscape:pagecheckerboard="true">
     <inkscape:grid
        type="xygrid"
        id="grid815"
@@ -120,36 +121,37 @@
        transform="translate(0,7.6811689e-6)"
        style="fill:none;stroke:#000000;stroke-width:0.079375;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        d="M 4.2333334,296.20621 H 2.1166667 c -0.1322916,0 -0.6614583,0 -0.6614583,0.1323 0,0.13229 0.6614583,0.13229 0.6614583,0.26458 0,0.13229 -1.0583333,0.13229 -1.0583333,0.13229 H 0.26458334"
-       id="path817" />
+       id="path817"
+       inkscape:connector-curvature="0" />
   </g>
   <g
      inkscape:groupmode="layer"
      id="layer2"
      inkscape:label="Fill Regions">
     <rect
-       style="opacity:1;fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.5291667;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:markers stroke fill"
+       style="opacity:1;fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:markers stroke fill"
        id="rect932"
-       width="4.2333336"
-       height="4.2333336"
+       width="16"
+       height="16"
        x="0"
-       y="-4.0000003e-08"
-       rx="1.1073474e-07"
-       ry="0.13229167" />
+       y="-1.5118111e-07"
+       rx="4.1852499e-07"
+       ry="0.5" />
     <path
-       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.5291667;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       d="m 0.3050222,3.9552942 c 0,0 0.4550256,-1.8150152 0.9812125,-2.037183 C 1.8124216,1.6959434 2.4941273,2.1218017 2.6080857,1.8406162 2.7423121,1.5094214 3.9498871,0.2813791 3.9498871,0.2813791"
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 1.1528398,14.949143 c 0,0 1.7197818,-6.8598997 3.7085196,-7.699589 C 6.8500973,6.4098647 9.4266227,8.0194078 9.8573316,6.9566595 10.364644,5.7048996 14.928707,1.06348 14.928707,1.06348"
        id="path883-0"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="cssc" />
     <path
-       style="fill:none;fill-rule:evenodd;stroke:#ff9700;stroke-width:0.26458335px;stroke-linecap:round;stroke-linejoin:miter;stroke-opacity:1"
-       d="m 0.3050222,3.9552942 c 0,0 0.45502554,-1.8150153 0.9812124,-2.0371831 C 1.8124215,1.6959433 2.4941272,2.1218016 2.6080856,1.8406165 2.7423121,1.5094213 3.9498872,0.28137901 3.9498872,0.28137901"
+       style="fill:none;fill-rule:evenodd;stroke:#ff9700;stroke-width:1px;stroke-linecap:round;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 1.1528398,14.949143 c 0,0 1.7197815,-6.8599001 3.7085192,-7.6995894 C 6.8500969,6.4098643 9.4266223,8.0194074 9.8573312,6.9566606 10.364644,5.7048993 14.928707,1.0634797 14.928707,1.0634797"
        id="path883"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="cssc" />
     <g
        id="g877"
-       transform="translate(-0.03688654,-0.40139339)"
+       transform="matrix(3.7795275,0,0,3.7795275,-0.1394137,-1.5170773)"
        style="stroke:#000000;stroke-width:0.5291667;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1">
       <ellipse
          transform="matrix(0.50508608,0.86306897,-0.86502664,0.50172593,0,0)"
@@ -185,7 +187,7 @@
     </g>
     <g
        id="g877-7"
-       transform="translate(-0.03688654,-0.40139339)"
+       transform="matrix(3.7795275,0,0,3.7795275,-0.1394137,-1.5170773)"
        style="stroke:#ffffff;stroke-opacity:1">
       <ellipse
          transform="matrix(0.50508608,0.86306897,-0.86502664,0.50172593,0,0)"
