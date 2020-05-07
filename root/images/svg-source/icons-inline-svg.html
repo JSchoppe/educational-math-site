@@ -1,0 +1,42 @@
+/*TEMPLATE_BEGIN(hamburger-icon)*/
+<svg class="hamburger" viewBox="0 0 16 16">
+    <path id="hamburger-bot" d="M 3,13 13,13" style="fill:none;stroke-linecap:round;stroke-width:2.5;stroke:#000"/>
+    <path id="hamburger-mid" d="m3 8h10" style="fill:none;stroke-linecap:round;stroke-width:2.5;stroke:#000"/>
+    <path id="hamburger-top" d="M 3,3 13,3" style="fill:none;stroke-linecap:round;stroke-width:2.5;stroke:#000"/>
+</svg>
+/*TEMPLATE_END*/
+
+<style>
+    *{
+        /*TEMPLATE_BEGIN(icon-morph-duration)*/
+        transition-duration: 0.4s;
+        /*TEMPLATE_END*/
+    }
+
+    /*TEMPLATE_BEGIN(hamburger-style)*/
+    .hamburger > *{
+        transition-property: all;
+        /*GET_TEMPLATE(icon-morph-duration)*/
+    }
+    .hamburger.expanded > #hamburger-top{
+        d: path("M 3,8 8,3");
+    }
+    .hamburger.expanded > #hamburger-bot{
+        d: path("M 3,8 8,13");
+    }
+    /*TEMPLATE_END*/
+</style>
+
+/*TEMPLATE_BEGIN(rendering-icon)*/
+<svg viewBox="0 0 16 16">
+    <path d="m5.5 5s-0.5 0-0.5 0.5c0 2.1677-0.00195 6.5-0.00195 6.5h0.00391l-2.002 3s-0.5 0.5 1 0.5c2.6667 0 5.3333 2e-6 8 0 0.5 0 1-0.5 1-0.5l2-2.9961v-0.003906h-0.0039v-6.5c0-0.5-0.5-0.5-0.5-0.5zm0.5 1h8v5h-8z" style="color-rendering:auto;color:#000000;dominant-baseline:auto;fill-rule:evenodd;font-feature-settings:normal;font-variant-alternates:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-variant-numeric:normal;font-variant-position:normal;image-rendering:auto;isolation:auto;mix-blend-mode:normal;shape-padding:0;shape-rendering:auto;solid-color:#000000;text-decoration-color:#000000;text-decoration-line:none;text-decoration-style:solid;text-indent:0;text-orientation:mixed;text-transform:none;white-space:normal"/>
+    <path d="m4.5 12h-3.5v-11h13.5v3.5" style="fill:none;stroke-width:.5;stroke:#000"/>
+    <path d="m6.5 10.5v-1h1v1z" style="fill-rule:evenodd"/>
+    <path d="m13.5 7.5h-1v-1h1z" style="fill-rule:evenodd"/>
+    <path d="m7 10s0.5-3 1.5-3 0.5 1.5 1.5 1.5c0.5 0 0.5 1 1.5 1s1.5-2.5 1.5-2.5" style="fill:none;stroke-width:.5;stroke:#000"/>
+    <path d="m1.5 11.5v-2h2v2z" style="fill-rule:evenodd"/>
+    <path d="m14 3.5h-2v-2h2z" style="fill-rule:evenodd"/>
+    <path d="m2 9.5v-2h0.5v-2h0.5v-1.5h0.5v-1h0.5v-0.5h0.5v-0.5h1v0.5h1v1h0.5v1h-1.5v-1h-1v1h-0.5v1.5h-0.5v2.5h-0.5v1z" style="fill-rule:evenodd"/>
+    <path d="m12.5 3.5h1v1h-1z" style="fill-rule:evenodd"/>
+</svg>
+/*TEMPLATE_END*/

@@ -15,12 +15,12 @@ body{
     padding: 10px;
     margin: 5px 0px;
 }
-.category-label img{
+.category-label > svg{
     width: 40px; height: 40px;
     margin-right: 10px;
 }
-.category-label p{
-    color: black;
+.category-label > p{
+    /*GET_TEMPLATE(button-content-color)*/
 }
 
 /* The ribbon section headers. */
@@ -29,11 +29,11 @@ body{
     display: flex;
     flex-direction: row;
 }
-.title-ribbon img{
+.title-ribbon > svg{
     /* This is the end of the ribbon. */
     height: 80px;
 }
-.title-ribbon h2{
+.title-ribbon > h2{
     background-image: url("/images/decorations/ribbon-middle.svg");
     background-size: contain;
     line-height: 80px;
@@ -71,10 +71,10 @@ body{
     transition-duration: 1s;
 }
 .input-panel{
-    background-color: rgb(14, 14, 53);
+    /*GET_TEMPLATE(panel-color-a)*/
 }
 .output-panel{
-    background-color: rgb(33, 63, 83);
+    /*GET_TEMPLATE(panel-color-b)*/
 }
 .panel-hidden{
     transform: rotateY(90deg);
@@ -87,7 +87,7 @@ body{
     #nav-pull-tab{ display: none; }
 
     .category-label{
-        background-color: white;
+        /*GET_TEMPLATE(button-color)*/
         border-radius: 0px 20px 20px 0px;
     }
     .label-active{
@@ -115,7 +115,7 @@ body{
         z-index: 99;
     }
     .category-label:hover{
-        background-color: rgb(255, 130, 130);
+        /*GET_TEMPLATE(button-color-hover)*/
         cursor: pointer;
     }
 
@@ -140,6 +140,8 @@ body{
 /* Only applies to mobile devices. */
 @media only screen and (max-width: 414px)
 {
+    /*GET_TEMPLATE(hamburger-style)*/
+
     #nav-wrapper{
         position: fixed;
         top: 0px;
@@ -166,7 +168,7 @@ body{
         align-items: center;
         justify-content: center;
     }
-    #nav-pull-tab img{
+    #nav-pull-tab > svg{
         width: 60%; height: 60%;
     }
     #site-logo{
@@ -194,7 +196,7 @@ body{
         font-size: 16px;
         width: calc(100% - 40px);
     }
-    .title-ribbon img{
+    .title-ribbon svg{
         height: 40px;
     }
     .tool-content-wrapper{

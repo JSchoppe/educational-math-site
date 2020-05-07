@@ -29,7 +29,7 @@ body{
     height: 50px;
 }
 #settings-content{
-    background-color: rgb(75, 48, 48);
+    /*GET_TEMPLATE(panel-color-b)*/
     height: 500px;
     overflow-y: scroll;
     overflow-x: hidden;
@@ -48,7 +48,7 @@ body{
 }
 
 #output-blackboard{
-    background-color: black;
+    /*GET_TEMPLATE(panel-color-c)*/
 }
 
 #timeline-controls{
@@ -106,13 +106,13 @@ body{
         row-gap: 5px;
     }
     #input-fields{
+        /*GET_TEMPLATE(panel-color-e)*/
         width: min-content;
-        background-color: darkred;
         grid-column: 2 / 3;
         grid-row: 2 / 6;
     }
     #output-graph{
-        background-color: green;
+        /*GET_TEMPLATE(panel-color-a)*/
         grid-column: 3 / 4;
         grid-row: 2 / 4;
         width: 100%;

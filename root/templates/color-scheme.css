@@ -1,0 +1,38 @@
+*{
+    /*TEMPLATE_BEGIN(background-color)*/
+    background-color: #020219;
+    /*TEMPLATE_END*/
+
+    /*Panel colors provide some contrast to the background for content groups*/
+
+    /*TEMPLATE_BEGIN(panel-color-a)*/
+    background-color: #0A4766;
+    /*TEMPLATE_END*/
+    /*TEMPLATE_BEGIN(panel-color-b)*/
+    background-color: #0A2866;
+    /*TEMPLATE_END*/
+    /*TEMPLATE_BEGIN(panel-color-c)*/
+    background-color: #0A0A66;
+    /*TEMPLATE_END*/
+    /*TEMPLATE_BEGIN(panel-color-d)*/
+    background-color: #280A66;
+    /*TEMPLATE_END*/
+    /*TEMPLATE_BEGIN(panel-color-e)*/
+    background-color: #470A66;
+    /*TEMPLATE_END*/
+
+    /*Colors for items that are interactable*/
+
+    /*TEMPLATE_BEGIN(button-color)*/
+    background-color: white;
+    /*TEMPLATE_END*/
+    /*TEMPLATE_BEGIN(button-content-color)*/
+    color: black;
+    /*TEMPLATE_END*/
+    /*TEMPLATE_BEGIN(button-color-hover)*/
+    background-color: green;
+    /*TEMPLATE_END*/
+    /*TEMPLATE_BEGIN(button-content-color-hover)*/
+    color: white;
+    /*TEMPLATE_END*/
+}
