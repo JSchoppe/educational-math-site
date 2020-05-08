@@ -146,7 +146,14 @@ function buildDirectoryRecursive(path, buildPath)
     {
         let content = FileSystem.readFileSync(file, { encoding: "utf8" });
         content = fillTemplateRequests(content);
-        FileSystem.writeFileSync(Path.join(BUILD_DIRECTORY, buildPath, Path.basename(file)), content);
+        if(STRIP_LOCAL_HTML_EXTENSIONS && Path.extname(file) == ".html")
+        {
+            content = stripLocalHTMLExtensions(content);
+            const strippedName = Path.basename(file).replace(/.html$/,"");
+            FileSystem.writeFileSync(Path.join(BUILD_DIRECTORY, buildPath, strippedName), content);
+        }
+        else
+            FileSystem.writeFileSync(Path.join(BUILD_DIRECTORY, buildPath, Path.basename(file)), content);
     }
     for(folder of directory.folders)
     {
@@ -175,6 +182,22 @@ function fillTemplateRequests(content)
             content = content.slice(0, templateRequests[i].startIndex) + 
                 templateDefinitions[key] +
                 content.slice(templateRequests[i].endIndex);
+        }
+    }
+    return content;
+}
+function stripLocalHTMLExtensions(content)
+{
+    const HREFMatches = getAllRegexMatches(content, HTML_HREF);
+    if(HREFMatches)
+    {
+        // Work backwards so the match indices are not offset.
+        for(let i = HREFMatches.length - 1; i >= 0; i--)
+        {
+            // Strip the .html from the href path.
+            content = content.slice(0, HREFMatches[i].startIndex) + 
+                HREFMatches[i].text.replace(".html", "") +
+                content.slice(HREFMatches[i].endIndex);
         }
     }
     return content;
