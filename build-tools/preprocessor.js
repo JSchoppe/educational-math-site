@@ -6,7 +6,6 @@ const Path = require("path");
 // Settings:
 const MINIFY_JS = false;
 const MINIFY_CSS = false;
-const STRIP_LOCAL_HTML_EXTENSIONS = true;
 const BUILD_DIRECTORY = ".." + Path.sep + "build" + Path.sep;
 const SOURCE_DIRECTORY = ".." + Path.sep + "root" + Path.sep;
 // Used to disclude template or source quality files:
@@ -18,7 +17,6 @@ const TEMPLATE_FILL_CALL = /\/\*GET_TEMPLATE\(\S+\)\*\//g;          //--> /*GET_
 
 // Expressions used internally.
 const FROM_PARENTHESES = /(?<=\()\S+(?=\))/; // Matches the content inside a set of parentheses.
-const HTML_HREF = /href\s*=\s*('|")\S+\.html('|")/g; // Matches an href property pointing to html.
 
 // Check for the existence of the neccasary directories.
 if(!FileSystem.existsSync(SOURCE_DIRECTORY))
@@ -146,14 +144,7 @@ function buildDirectoryRecursive(path, buildPath)
     {
         let content = FileSystem.readFileSync(file, { encoding: "utf8" });
         content = fillTemplateRequests(content);
-        if(STRIP_LOCAL_HTML_EXTENSIONS && Path.extname(file) == ".html")
-        {
-            content = stripLocalHTMLExtensions(content);
-            const strippedName = Path.basename(file).replace(/.html$/,"");
-            FileSystem.writeFileSync(Path.join(BUILD_DIRECTORY, buildPath, strippedName), content);
-        }
-        else
-            FileSystem.writeFileSync(Path.join(BUILD_DIRECTORY, buildPath, Path.basename(file)), content);
+        FileSystem.writeFileSync(Path.join(BUILD_DIRECTORY, buildPath, Path.basename(file)), content);
     }
     for(folder of directory.folders)
     {
@@ -186,22 +177,6 @@ function fillTemplateRequests(content)
     }
     return content;
 }
-function stripLocalHTMLExtensions(content)
-{
-    const HREFMatches = getAllRegexMatches(content, HTML_HREF);
-    if(HREFMatches)
-    {
-        // Work backwards so the match indices are not offset.
-        for(let i = HREFMatches.length - 1; i >= 0; i--)
-        {
-            // Strip the .html from the href path.
-            content = content.slice(0, HREFMatches[i].startIndex) + 
-                HREFMatches[i].text.replace(".html", "") +
-                content.slice(HREFMatches[i].endIndex);
-        }
-    }
-    return content;
-}
 
 console.log("Process completed with no errors");
 
@@ -218,9 +193,7 @@ function clearDir(path)
             FileSystem.rmdirSync(fullPath);
         }
         else if(directoryListing.isFile())
-        {
             FileSystem.unlinkSync(fullPath);
-        }
     }
 }
 function getFilePathsRecursive(path)
@@ -235,9 +208,7 @@ function getFilePathsRecursive(path)
             filePaths.push(...subFiles);
         }
         else if(directoryListing.isFile())
-        {
             filePaths.push(fullPath);
-        }
     }
     return filePaths;
 }
@@ -249,13 +220,9 @@ function getFilesAndFolders(path)
     {
         const fullPath = Path.join(path, directoryListing.name);
         if(directoryListing.isDirectory())
-        {
             folderPaths.push(fullPath);
-        }
         else if(directoryListing.isFile())
-        {
             filePaths.push(fullPath);
-        }
     }
     return {
         files: filePaths,
