@@ -7,6 +7,7 @@
         // Get page references.
         const nav = document.querySelector("nav");
         const navPullTab = document.querySelector("#nav-pull-tab");
+        const hamburger = navPullTab.querySelector(".hamburger");
         const navLabels = document.querySelectorAll(".category-label");
     
         // When the mobile user clicks the hamburger menu,
@@ -14,6 +15,7 @@
         navPullTab.addEventListener("click", ()=>
         {
             nav.classList.toggle("mobile-collapsed");
+            hamburger.classList.toggle("expanded");
         });
         // When any label is clicked, the mobile menu is collapsed.
         navLabels.forEach((element) =>
@@ -21,6 +23,7 @@
             element.addEventListener("click", ()=>
             {
                 nav.classList.add("mobile-collapsed");
+                hamburger.classList.remove("expanded");
             });
         });
     })();
