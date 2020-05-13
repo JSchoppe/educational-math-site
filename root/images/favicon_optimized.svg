@@ -1,0 +1,19 @@
+<svg version="1.1" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+ <rect y="-1.5118e-7" width="16" height="16" rx="4.1852e-7" ry=".5" style="fill-rule:evenodd;paint-order:markers stroke fill"/>
+ <path d="m1.1528 14.949s1.7198-6.8599 3.7085-7.6996c1.9887-0.83969 4.5653 0.76985 4.996-0.29289 0.50731-1.2518 5.0714-5.8932 5.0714-5.8932" style="fill:none;stroke-linecap:round;stroke-width:2;stroke:#000"/>
+ <path d="m1.1528 14.949s1.7198-6.8599 3.7085-7.6996c1.9887-0.83969 4.5653 0.76985 4.996-0.29289 0.50731-1.2518 5.0714-5.8932 5.0714-5.8932" style="fill:none;stroke-linecap:round;stroke-width:1px;stroke:#ff9700"/>
+ <g transform="matrix(3.7795 0 0 3.7795 -.13941 -1.5171)" style="stroke-width:.52917;stroke:#000">
+  <ellipse transform="matrix(.50509 .86307 -.86503 .50173 0 0)" cx="3.9374" cy="-.11619" rx=".54519" ry=".65567" style="fill:none;paint-order:markers stroke fill;stroke-linecap:round;stroke-linejoin:round;stroke-width:.52917;stroke:#000"/>
+  <ellipse transform="matrix(.50509 .86307 -.86503 .50173 0 0)" cx="4.0309" cy="-1.6487" rx=".4369" ry=".52544" style="fill:none;paint-order:markers stroke fill;stroke-linecap:round;stroke-linejoin:round;stroke-width:.52917;stroke:#000"/>
+  <path d="m2.6479 3.0117s0.049609-0.086816 0.13022-0.12609c0.080615-0.039274 0.20464-0.016536 0.20464-0.016536" style="fill:none;stroke-width:.52917;stroke:#000"/>
+  <path d="m1.4593 3.5388-0.20671 0.057878s-0.59945-1.4635-0.71934-1.542c-0.11989-0.078549-0.21084-0.024805-0.21084-0.024805" style="fill:none;stroke-linecap:round;stroke-linejoin:round;stroke-width:.52917;stroke:#000"/>
+  <path d="m3.8695 2.3192 0.11162-0.066146s-1.265-0.8723-1.4511-0.92604c-0.18604-0.053744-0.3514-0.00413-0.3514-0.00413" style="fill:none;stroke-linecap:round;stroke-linejoin:round;stroke-width:.52917;stroke:#000"/>
+ </g>
+ <g transform="matrix(3.7795 0 0 3.7795 -.13941 -1.5171)" style="stroke:#fff">
+  <ellipse transform="matrix(.50509 .86307 -.86503 .50173 0 0)" cx="3.9374" cy="-.11619" rx=".54519" ry=".65567" style="fill:none;paint-order:markers stroke fill;stroke-linecap:round;stroke-linejoin:round;stroke-width:.26458;stroke:#fff"/>
+  <ellipse transform="matrix(.50509 .86307 -.86503 .50173 0 0)" cx="4.0309" cy="-1.6487" rx=".4369" ry=".52544" style="fill:none;paint-order:markers stroke fill;stroke-linecap:round;stroke-linejoin:round;stroke-width:.26458;stroke:#fff"/>
+  <path d="m2.6479 3.0117s0.049609-0.086816 0.13022-0.12609c0.080615-0.039274 0.20464-0.016536 0.20464-0.016536" style="fill:none;stroke-width:.26458px;stroke:#fff"/>
+  <path d="m1.4593 3.5388-0.20671 0.057878s-0.59945-1.4635-0.71934-1.542c-0.11989-0.078549-0.21084-0.024805-0.21084-0.024805" style="fill:none;stroke-linecap:round;stroke-linejoin:round;stroke-width:.26458px;stroke:#fff"/>
+  <path d="m3.8695 2.3192 0.11162-0.066146s-1.265-0.8723-1.4511-0.92604c-0.18604-0.053744-0.3514-0.00413-0.3514-0.00413" style="fill:none;stroke-linecap:round;stroke-linejoin:round;stroke-width:.26458px;stroke:#fff"/>
+ </g>
+</svg>

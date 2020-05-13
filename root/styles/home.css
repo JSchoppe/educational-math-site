@@ -16,6 +16,9 @@ body{
     margin: 5px 0px;
 }
 .category-label > svg{
+    transition-property: width, height;
+    transition-duration: 0.2s;
+    transition-timing-function: linear;
     width: 40px; height: 40px;
     margin-right: 10px;
 }
@@ -26,19 +29,29 @@ body{
 /* The ribbon section headers. */
 .title-ribbon{
     height: 80px;
-    display: flex;
+    display: grid;
+    grid-template-columns: 80px auto;
+    grid-template-rows: auto;
     flex-direction: row;
 }
-.title-ribbon > svg{
+.title-ribbon > .ribbon-left{
     /* This is the end of the ribbon. */
     height: 80px;
+    grid-column: 1/2;
 }
 .title-ribbon > h2{
-    background-image: url("/images/decorations/ribbon-middle.svg");
-    background-size: contain;
+    grid-column: 2/3;
+    grid-row: 1/2;
     line-height: 80px;
     /* Full width minus the ribbon end graphic. */
     width: calc(100% - 80px);
+}
+.title-ribbon > .ribbon-middle{
+    /* This is the length of the ribbon. */
+    grid-column: 2/3;
+    grid-row: 1/2;
+    height: 80px;
+    width: 100%;
 }
 
 /* Styling for the tool information. */
@@ -94,11 +107,11 @@ body{
         background-color: rgb(180, 180, 180);
         padding: 25px;
     }
-    .label-active img{
+    .label-active > svg{
         width: 60px; height: 60px;
     }
 
-    #site-logo{
+    .site-logo > svg{
         position: fixed;
         left: 0px; top: 0px;
         width: 20vw; height: 7.5vw;
@@ -171,7 +184,7 @@ body{
     #nav-pull-tab > svg{
         width: 60%; height: 60%;
     }
-    #site-logo{
+    .site-logo > svg{
         z-index: 99;
         position: fixed;
         right: 0px; top: 0px;
@@ -186,17 +199,17 @@ body{
 
     .title-ribbon{
         height: 40px;
-        display: flex;
-        flex-direction: row;
+        grid-template-columns: 40px auto;
     }
-    .title-ribbon h2{
-        background-image: url("/images/decorations/ribbon-middle.svg");
-        background-size: contain;
+    .title-ribbon > h2{
         line-height: 40px;
         font-size: 16px;
         width: calc(100% - 40px);
     }
-    .title-ribbon svg{
+    .title-ribbon > .ribbon-left{
+        height: 40px;
+    }
+    .title-ribbon > .ribbon-middle{
         height: 40px;
     }
     .tool-content-wrapper{

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/svg" href="images/icons/favicon.svg">
+    <link rel="icon" type="image/svg" href="images/favicon_optimized.svg">
     <link rel="stylesheet" type="text/css" href="styles/general.css">
     <link rel="stylesheet" type="text/css" href="styles/equation.css">
     <link rel="stylesheet" type="text/css" href="styles/home.css">
@@ -12,11 +12,11 @@
     <title>Math Vision > Home</title>
 </head>
 <body>
-    <div class="site-logo"><img id="site-logo" src="images/decorations/site-logo.svg"></div>
+    <div class="site-logo">/*GET_TEMPLATE(site-logo)*/</div>
     <div id="nav-wrapper">
         <nav class="mobile-collapsed">
             <a href="#geometry-start" class="category-label label-active" id="geometry-tab">
-                <img src="images/icons/geometry.svg">
+                /*GET_TEMPLATE(geometry-icon)*/
                 <p>Geometry</p>
             </a>
             <a href="#rendering-start" class="category-label" id="rendering-tab">
@@ -24,7 +24,7 @@
                 <p>Rendering</p>
             </a>
             <a href="#numerical-start" class="category-label" id="numerical-tab">
-                <img src="images/icons/numerical-analysis.svg">
+                /*GET_TEMPLATE(numerical-analysis-icon)*/
                 <p>Numerical Analysis</p>
             </a>
             <a href="about.html" class="category-label">
@@ -39,6 +39,7 @@
         <div class="tool-info-wrapper">
             <div class="title-ribbon">
                 /*GET_TEMPLATE(ribbon-left)*/
+                /*GET_TEMPLATE(ribbon-middle)*/
                 <h2 id="geometry-start">Center of Gravity</h2>
             </div>
             <div class="tool-content-wrapper">
@@ -97,6 +98,7 @@
         <div class="tool-info-wrapper">
             <div class="title-ribbon">
                 /*GET_TEMPLATE(ribbon-left)*/
+                /*GET_TEMPLATE(ribbon-middle)*/
                 <h2 id="rendering-start">Bezier Curves</h2>
             </div>
             <div class="tool-content-wrapper">
@@ -148,6 +150,7 @@
         <div class="tool-info-wrapper">
             <div class="title-ribbon">
                 /*GET_TEMPLATE(ribbon-left)*/
+                /*GET_TEMPLATE(ribbon-middle)*/
                 <h2 id="numerical-start">Lagrange Interpolating Polynomial</h2>
             </div>
             <div class="tool-content-wrapper">
@@ -184,6 +187,7 @@
         <div class="tool-info-wrapper">
             <div class="title-ribbon">
                 /*GET_TEMPLATE(ribbon-left)*/
+                /*GET_TEMPLATE(ribbon-middle)*/
                 <h2>Spline Generation</h2>
             </div>
             <div class="tool-content-wrapper">
