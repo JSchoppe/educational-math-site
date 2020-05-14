@@ -280,6 +280,7 @@ function GraphOutput(canvasElement)
                 maxY *= 1.25;
             }
         }
+        isDormant = false;
     };
     
     let dragStartX, dragStartY, minXStart, minYStart, maxXStart, maxYStart;
