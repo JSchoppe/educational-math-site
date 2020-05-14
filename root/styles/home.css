@@ -62,12 +62,15 @@ body{
 .tool-info-wrapper{
     /* This adds spacing to the next ribbon. */
     margin-bottom: 50px;
+}
+.tool-info-wrapper > div{
     /* Transform is used to bring the wrapper in from the right. */
     transition-property: transform;
     transition-duration: 0.5s;
     transform: translateX(0vw);
 }
-.panned-offscreen{
+
+.panned-offscreen > div{
     transform: translateX(100vw);
 }
 

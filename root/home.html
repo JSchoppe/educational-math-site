@@ -36,202 +36,213 @@
         </div>
     </div> 
     <main>
+        <div id="geometry-start"></div>
         <div class="tool-info-wrapper">
-            <div class="title-ribbon">
-                /*GET_TEMPLATE(ribbon-left)*/
-                /*GET_TEMPLATE(ribbon-middle)*/
-                <h2 id="geometry-start">Center of Gravity</h2>
+            <div>
+                <div class="title-ribbon">
+                    /*GET_TEMPLATE(ribbon-left)*/
+                    /*GET_TEMPLATE(ribbon-middle)*/
+                    <h2>Center of Gravity</h2>
+                </div>
+                <div class="tool-content-wrapper">
+                    <div class="tool-explanation">
+                        <p>
+                            When a torque is applied to an object it will always rotate
+                            about its center of gravity. This is the average location
+                            of the object's mass. This center of mass can be calculated
+                            by approximating an object shape with primitive shapes where
+                            the center of gravity is easy to calculate. Pivoting about
+                            the center of gravity ensures physics simulations are accurate
+                            to reality.
+                        </p>
+                        <div class="input-output-wrapper">
+                            <div class="input-panel">
+                                <p class="function">
+                                    Example Input:
+                                </p>
+                                <p class="function">
+                                    Circle r=3/2 @(3/2, 3/2)
+                                </p>
+                                <p class="function">
+                                    Rectangle from(3/2, 0) to(9/2, 3)
+                                </p>
+                                <p class="function">
+                                    Triangle a(3/2, 3) b(9/2, 3) c(9/2, 4)
+                                </p>
+                                <p class="function">
+                                    Hole r=1/2 @(3/2, 3/2)
+                                </p>
+                            </div>
+                            <div class="output-panel">
+                                <p class="function">
+                                    Example Output:
+                                </p>
+                                <p class="function">
+                                    X = (3π + 66) / (2π + 24)
+                                </p>
+                                <p class="function">
+                                    Y = (21π + 296) / (14π + 168)
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tool-preview-wrapper">
+                        <canvas id="center-of-gravity-canvas"></canvas>
+                    </div>
+                    <a href="/numerical-analysis/lagrange-polynomial.html">
+                        <div class="goto-button">
+                            <p>Explore Center of Gravity</p>
+                            /*GET_TEMPLATE(button-chevrons)*/
+                        </div>
+                    </a>
+                </div>
             </div>
-            <div class="tool-content-wrapper">
-                <div class="tool-explanation">
-                    <p>
-                        When a torque is applied to an object it will always rotate
-                        about its center of gravity. This is the average location
-                        of the object's mass. This center of mass can be calculated
-                        by approximating an object shape with primitive shapes where
-                        the center of gravity is easy to calculate. Pivoting about
-                        the center of gravity ensures physics simulations are accurate
-                        to reality.
-                    </p>
-                    <div class="input-output-wrapper">
-                        <div class="input-panel">
-                            <p class="function">
-                                Example Input:
-                            </p>
-                            <p class="function">
-                                Circle r=3/2 @(3/2, 3/2)
-                            </p>
-                            <p class="function">
-                                Rectangle from(3/2, 0) to(9/2, 3)
-                            </p>
-                            <p class="function">
-                                Triangle a(3/2, 3) b(9/2, 3) c(9/2, 4)
-                            </p>
-                            <p class="function">
-                                Hole r=1/2 @(3/2, 3/2)
-                            </p>
-                        </div>
-                        <div class="output-panel">
-                            <p class="function">
-                                Example Output:
-                            </p>
-                            <p class="function">
-                                X = (3π + 66) / (2π + 24)
-                            </p>
-                            <p class="function">
-                                Y = (21π + 296) / (14π + 168)
-                            </p>
+        </div>
+        <div id="rendering-start"></div>
+        <div class="tool-info-wrapper">
+            <div>
+                <div class="title-ribbon">
+                    /*GET_TEMPLATE(ribbon-left)*/
+                    /*GET_TEMPLATE(ribbon-middle)*/
+                    <h2>Bezier Curves</h2>
+                </div>
+                <div class="tool-content-wrapper">
+                    <div class="tool-explanation">
+                        <p>
+                            Bezier curves are a way to store curves of any shape with
+                            relatively little data. A bezier curve consists of nodes
+                            and control vectors that control the shape of the curve
+                            from node to node. Bezier curves are a great solution for
+                            rendering curves that are self-interesecting, or otherwise
+                            not one-to-one functions on any axis.
+                        </p>
+                        <div class="input-output-wrapper">
+                            <div class="input-panel">
+                                <p class="function">
+                                    Example Input:
+                                </p>
+                                <p class="function">
+                                    Node(0, 0) Control(0, 1)
+                                </p>
+                                <p class="function">
+                                    Control(4, 1) Node(4, 4) Control(4, 6)
+                                </p>
+                                <p class="function">
+                                    Control(4, 1) Node(6, 1)
+                                </p>
+                            </div>
+                            <div class="output-panel">
+                                <p class="function">
+                                    Example Output:
+                                </p>
+                                <p class="function">
+                                (Graph)
+                                </p>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="tool-preview-wrapper">
-                    <canvas id="center-of-gravity-canvas"></canvas>
-                </div>
-                <a href="/numerical-analysis/lagrange-polynomial.html">
-                    <div class="goto-button">
-                        <p>Explore Center of Gravity</p>
-                        /*GET_TEMPLATE(button-chevrons)*/
+                    <div class="tool-preview-wrapper">
+                        <canvas id="bezier-canvas"></canvas>
                     </div>
-                </a>
+                    <a href="/numerical-analysis/lagrange-polynomial.html">
+                        <div class="goto-button">
+                            <p>Explore Bezier Curvers</p>
+                            /*GET_TEMPLATE(button-chevrons)*/
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div id="numerical-start"></div>
+        <div class="tool-info-wrapper">
+            <div>
+                <div class="title-ribbon">
+                    /*GET_TEMPLATE(ribbon-left)*/
+                    /*GET_TEMPLATE(ribbon-middle)*/
+                    <h2>Lagrange Interpolating Polynomial</h2>
+                </div>
+                <div class="tool-content-wrapper">
+                    <div class="tool-explanation">
+                        <p>
+                            Given a series of coordinates in 2D space, a polynomial function can be
+                            generated that will pass through every coordinate. This can be used to
+                            approximate the value at other data point along the interval.
+                        </p>
+                        <div class="input-output-wrapper">
+                            <div class="input-panel">
+                                <p class="function">
+                                    Example Input: (0, 1), (2, 2), (3, 4)
+                                </p>
+                            </div>
+                            <div class="output-panel">
+                                <p class="function">
+                                    Example Output: ⨍(x) = 0.5*x² - 0.5*x + 1
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tool-preview-wrapper">
+                        <canvas id="lagrange-canvas"></canvas>
+                    </div>
+                    <a href="/numerical-analysis/lagrange-polynomial.html">
+                        <div class="goto-button">
+                            <p>Explore Lagrange Polynomial</p>
+                            /*GET_TEMPLATE(button-chevrons)*/
+                        </div>
+                    </a>
+                </div>
             </div>
         </div>
         <div class="tool-info-wrapper">
-            <div class="title-ribbon">
-                /*GET_TEMPLATE(ribbon-left)*/
-                /*GET_TEMPLATE(ribbon-middle)*/
-                <h2 id="rendering-start">Bezier Curves</h2>
-            </div>
-            <div class="tool-content-wrapper">
-                <div class="tool-explanation">
-                    <p>
-                        Bezier curves are a way to store curves of any shape with
-                        relatively little data. A bezier curve consists of nodes
-                        and control vectors that control the shape of the curve
-                        from node to node. Bezier curves are a great solution for
-                        rendering curves that are self-interesecting, or otherwise
-                        not one-to-one functions on any axis.
-                    </p>
-                    <div class="input-output-wrapper">
-                        <div class="input-panel">
-                            <p class="function">
-                                Example Input:
-                            </p>
-                            <p class="function">
-                                Node(0, 0) Control(0, 1)
-                            </p>
-                            <p class="function">
-                                Control(4, 1) Node(4, 4) Control(4, 6)
-                            </p>
-                            <p class="function">
-                                Control(4, 1) Node(6, 1)
-                            </p>
-                        </div>
-                        <div class="output-panel">
-                            <p class="function">
-                                Example Output:
-                            </p>
-                            <p class="function">
-                               (Graph)
-                            </p>
-                        </div>
-                    </div>
+            <div>
+                <div class="title-ribbon">
+                    /*GET_TEMPLATE(ribbon-left)*/
+                    /*GET_TEMPLATE(ribbon-middle)*/
+                    <h2>Spline Generation</h2>
                 </div>
-                <div class="tool-preview-wrapper">
-                    <canvas id="bezier-canvas"></canvas>
-                </div>
-                <a href="/numerical-analysis/lagrange-polynomial.html">
-                    <div class="goto-button">
-                        <p>Explore Bezier Curvers</p>
-                        /*GET_TEMPLATE(button-chevrons)*/
-                    </div>
-                </a>
-            </div>
-        </div>
-        <div class="tool-info-wrapper">
-            <div class="title-ribbon">
-                /*GET_TEMPLATE(ribbon-left)*/
-                /*GET_TEMPLATE(ribbon-middle)*/
-                <h2 id="numerical-start">Lagrange Interpolating Polynomial</h2>
-            </div>
-            <div class="tool-content-wrapper">
-                <div class="tool-explanation">
-                    <p>
-                        Given a series of coordinates in 2D space, a polynomial function can be
-                        generated that will pass through every coordinate. This can be used to
-                        approximate the value at other data point along the interval.
-                    </p>
-                    <div class="input-output-wrapper">
-                        <div class="input-panel">
-                            <p class="function">
-                                Example Input: (0, 1), (2, 2), (3, 4)
-                            </p>
-                        </div>
-                        <div class="output-panel">
-                            <p class="function">
-                                Example Output: ⨍(x) = 0.5*x² - 0.5*x + 1
-                            </p>
+                <div class="tool-content-wrapper">
+                    <div class="tool-explanation">
+                        <p>
+                            Splines are used to connect a series of given points. They are piecewise
+                            meaning that each connection between two points is designated its own
+                            function. Splines are a quick way to generate descriptive curves while
+                            maintaining control over function complexity.
+                        </p>
+                        <div class="input-output-wrapper">
+                            <div class="input-panel">
+                                <p class="function">
+                                    Example Input: (0, 0), (1, 1), (2, 4)
+                                </p>
+                                <p class="function">
+                                degree=cubic
+                                </p>
+                                <p class="function">
+                                    condition=natural
+                                </p>
+                            </div>
+                            <div class="output-panel">
+                                <p class="function">
+                                    Example Output:
+                                </p>
+                                <p class="function">
+                                    ⨍(x)[0, 1] = 0.5*x - 0.5*x³
+                                </p>
+                                <p class="function">
+                                    ⨍(x)[1, 2] = 1 + 2(x-1) + 3/2(x-1)² - 1/2(x-1)³
+                                </p>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="tool-preview-wrapper">
-                    <canvas id="lagrange-canvas"></canvas>
-                </div>
-                <a href="/numerical-analysis/lagrange-polynomial.html">
-                    <div class="goto-button">
-                        <p>Explore Lagrange Polynomial</p>
-                        /*GET_TEMPLATE(button-chevrons)*/
+                    <div class="tool-preview-wrapper">
+                        <canvas id="spline-canvas"></canvas>
                     </div>
-                </a>
-            </div>
-        </div>
-        <div class="tool-info-wrapper">
-            <div class="title-ribbon">
-                /*GET_TEMPLATE(ribbon-left)*/
-                /*GET_TEMPLATE(ribbon-middle)*/
-                <h2>Spline Generation</h2>
-            </div>
-            <div class="tool-content-wrapper">
-                <div class="tool-explanation">
-                    <p>
-                        Splines are used to connect a series of given points. They are piecewise
-                        meaning that each connection between two points is designated its own
-                        function. Splines are a quick way to generate descriptive curves while
-                        maintaining control over function complexity.
-                    </p>
-                    <div class="input-output-wrapper">
-                        <div class="input-panel">
-                            <p class="function">
-                                Example Input: (0, 0), (1, 1), (2, 4)
-                            </p>
-                            <p class="function">
-                               degree=cubic
-                            </p>
-                            <p class="function">
-                                condition=natural
-                            </p>
+                    <a href="/numerical-analysis/lagrange-polynomial.html">
+                        <div class="goto-button">
+                            <p>Explore Spline Generation</p>
+                            /*GET_TEMPLATE(button-chevrons)*/
                         </div>
-                        <div class="output-panel">
-                            <p class="function">
-                                Example Output:
-                            </p>
-                            <p class="function">
-                                ⨍(x)[0, 1] = 0.5*x - 0.5*x³
-                            </p>
-                            <p class="function">
-                                ⨍(x)[1, 2] = 1 + 2(x-1) + 3/2(x-1)² - 1/2(x-1)³
-                            </p>
-                        </div>
-                    </div>
+                    </a>
                 </div>
-                <div class="tool-preview-wrapper">
-                    <canvas id="spline-canvas"></canvas>
-                </div>
-                <a href="/numerical-analysis/lagrange-polynomial.html">
-                    <div class="goto-button">
-                        <p>Explore Spline Generation</p>
-                        /*GET_TEMPLATE(button-chevrons)*/
-                    </div>
-                </a>
             </div>
         </div>
     </main>
