@@ -43,27 +43,50 @@
                     </div>
                 </div>
                 <div class="tab" id="settings-tab">
-                    <img id="settings-icon" src="/images/icons/gear-off.svg">
+                    /*GET_TEMPLATE(settings-icon)*/
                 </div>
             </div>
             <div class="pull-out-menu">
-                <div class="tab">
-                    <img src="/images/icons/formulas.svg">
+                <div id="formulas-content" class="top hidden">
+                    <h2>Formulas</h2>
+                </div>
+                <div class="tab" id="formulas-tab">
+                    /*GET_TEMPLATE(formulas-icon)*/
                 </div>
             </div>
         </div>
         <div id="title-ribbon">
             /*GET_TEMPLATE(ribbon-left)*/
+            /*GET_TEMPLATE(ribbon-middle)*/
             <h2>Lagrange Interpolating Polynomial</h2>
         </div>
         <div class="pane" id="input-fields">
             <h2>Inputs</h2>
-            <div class="vector2-field">
-                <label title="This is a tooltip">X1:</label>
-                <input type="number" id="fname"><br>
-                <label>Y1:</label>
-                <input type="number" id="fname"><br>
+            <div class="datapoint-set">
+                <div class="vector2-field" id="vector2-template">
+                    <p>Data Point 1</p>
+                    <label title="x coordinate">X1:</label>
+                    <input id="x1" type="text" value="0" autocomplete="off"><br>
+                    <label title="y coordinate">Y1:</label>
+                    <input id="y1" type="text" value="0" autocomplete="off"><br>
+                </div>
+                <div class="vector2-field">
+                    <p>Data Point 2</p>
+                    <label title="x coordinate">X2:</label>
+                    <input id="x2" type="text" value="1" autocomplete="off"><br>
+                    <label title="y coordinate">Y2:</label>
+                    <input id="y2" type="text" value="3" autocomplete="off"><br>
+                </div>
+                <div class="vector2-field">
+                    <p>Data Point 3</p>
+                    <label title="x coordinate">X3:</label>
+                    <input id="x3" type="text" value="3" autocomplete="off"><br>
+                    <label title="y coordinate">Y3:</label>
+                    <input id="y3" type="text" value="-1" autocomplete="off"><br>
+                </div>
             </div>
+            <button class="remove-datapoint-button negative-button"><div class="circled">-</div><span>Remove Data Point</span></button>
+            <button class="add-datapoint-button positive-button"><div class="circled">+</div><span>Add Data Point</span></button>
         </div>
         <div class="pane" id="output-graph">
             <canvas></canvas>
@@ -87,7 +110,11 @@
         </div>
     </main>
     <script src="/scripts/instance-objects/on-off-icon.js"></script>
+    <script src="/scripts/instance-objects/scaling-canvas.js"></script>
     <script src="/scripts/instance-objects/graph-output.js"></script>
+    <script src="/scripts/instance-objects/draw-commands/grid-drawer.js"></script>
+    <script src="/scripts/instance-objects/draw-commands/function-drawer.js"></script>
+    <script src="/scripts/instance-objects/draw-commands/dot-drawer.js"></script>
     <script src="/scripts/page-logic/lagrange-polynomial.js"></script>
 </body>
 </html>

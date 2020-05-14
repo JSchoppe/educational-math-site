@@ -28,7 +28,7 @@ body{
     width: 50px;
     height: 50px;
 }
-#settings-content{
+#settings-content, #formulas-content{
     /*GET_TEMPLATE(panel-color-b)*/
     height: 500px;
     overflow-y: scroll;
@@ -56,24 +56,44 @@ body{
     justify-content: center;
 }
 
+
+
+
+
 #title-ribbon{
     height: 60px;
-    display: flex;
+    display: grid;
+    grid-template-columns: 60px auto;
+    grid-template-rows: auto;
     flex-direction: row;
 }
-#title-ribbon h2{
-    background-image: url("/images/decorations/ribbon-middle.svg");
-    background-size: contain;
+#title-ribbon > .ribbon-left{
+    /* This is the end of the ribbon. */
+    height: 60px;
+    grid-column: 1/2;
+}
+#title-ribbon > h2{
+    grid-column: 2/3;
+    grid-row: 1/2;
     line-height: 60px;
+    /* Full width minus the ribbon end graphic. */
     width: calc(100% - 60px);
 }
-#title-ribbon img{
+#title-ribbon > .ribbon-middle{
+    /* This is the length of the ribbon. */
+    grid-column: 2/3;
+    grid-row: 1/2;
     height: 60px;
+    width: 100%;
 }
 
+
+
+
+
 .timeline-button{
-    width: 60px;
-    height: 60px;
+    width: 50px;
+    height: 50px;
     border-radius: 15px;
     border: solid grey 3px;
     background-color: white;
@@ -83,9 +103,53 @@ body{
     background-color: grey;
 }
 .timeline-button img{
-    width: 50px;
-    height: 50px;
+    width: 40px;
+    height: 40px;
 }
+
+.vector2-field{
+    white-space: nowrap;
+}
+
+.pane{
+    padding: 10px;
+}
+
+input{
+    color: black;
+    border-radius: 10px;
+    padding-left: 10px;
+}
+
+.negative-button, .positive-button{
+    padding-right: 10px;
+    border-radius: 10px;
+    display: flex;
+}
+.negative-button > span, .positive-button > span{
+    color: black;
+}
+.negative-button{
+    background-color: rgb(255, 190, 190);
+    border-color: red;
+}
+.positive-button{
+    background-color: rgb(190, 255, 190);
+    border-color: green;
+}
+.circled{
+    color: white;
+    width: 1.5rem;
+    border-radius: 6px;
+    margin-right: 5px;
+}
+.positive-button > .circled{
+    background-color: green;
+}
+.negative-button > .circled{
+    background-color: red;
+}
+
 
 /* Only applies to mid to desktop devices. */
 @media only screen and (min-width: 415px)
@@ -100,7 +164,7 @@ body{
         height: 100vh;
 
         display: grid;
-        grid-template-rows: min-content auto auto min-content 5vw;
+        grid-template-rows: 60px auto 50px 150px;
         grid-template-columns: min-content min-content auto;
         column-gap: 5px;
         row-gap: 5px;
@@ -109,16 +173,15 @@ body{
         /*GET_TEMPLATE(panel-color-e)*/
         width: min-content;
         grid-column: 2 / 3;
-        grid-row: 2 / 6;
+        grid-row: 2 / 5;
+        overflow-y: scroll;
     }
     #output-graph{
         /*GET_TEMPLATE(panel-color-a)*/
         grid-column: 3 / 4;
-        grid-row: 2 / 4;
+        grid-row: 2 / 3;
         width: 100%;
-        height: 500px;
-        min-height: 30vh;
-        max-height: 50vh;
+        height: calc(100vh - 275px);
     }
     #output-graph canvas{
         width: 100%;
@@ -126,7 +189,7 @@ body{
     }
     #output-blackboard{
         grid-column: 3 / 4;
-        grid-row: 5 / 6;
+        grid-row: 4 / 5;
     }
     #title-ribbon{
         grid-column: 2 / 4;
@@ -134,11 +197,11 @@ body{
     }
     #timeline-controls{
         grid-column: 3 / 4;
-        grid-row: 4 / 5;
+        grid-row: 3 / 4;
     }
     .tabbed-content{
         grid-column: 1 / 2;
-        grid-row: 1 / 6;
+        grid-row: 1 / 5;
     }
     .tab
     {
