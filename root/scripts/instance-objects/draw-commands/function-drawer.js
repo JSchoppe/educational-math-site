@@ -1,5 +1,7 @@
 function FunctionDrawer(oneToOneFunction)
 {
+    Drawer.call(this);
+
     const f = oneToOneFunction;
 
     let verticalAsymptotes = [];
@@ -12,28 +14,24 @@ function FunctionDrawer(oneToOneFunction)
 
     /**
      * Draws a function on the graph output
-     * @param {GraphOutput} graphOutput The graph output to draw to
      * @param {interpolant} [interpolant] How much of this object should be drawn this frame
      */
-    this.Draw = function(gOut, interpolant = 1)
+    this.Draw = function(interpolant = 1)
     {
-        // Retrieve information from the graph output.
-        const ctx = gOut.GetContext();
+        this.gContext.strokeStyle = "#FFFFFF";
+        this.gContext.lineWidth = 3;
 
-        ctx.strokeStyle = "#FFFFFF";
-        ctx.lineWidth = 3;
-
-        ctx.beginPath();
+        this.gContext.beginPath();
         
-        let startX = gOut.PixelsToUnitsX(-1);
+        let startX = this.gOut.PixelsToUnitsX(-1);
         let startY = f(startX);
-        ctx.moveTo(gOut.UnitsToPixelsX(startX), gOut.UnitsToPixelsY(startY));
-        for(let pixel = 0; pixel <= (gOut.GetCanvas().width + 1) * interpolant; pixel++)
+        this.gContext.moveTo(this.gOut.UnitsToPixelsX(startX), this.gOut.UnitsToPixelsY(startY));
+        for(let pixel = 0; pixel <= (this.gOut.GetCanvas().width + 1) * interpolant; pixel++)
         {
-            let inputX = gOut.PixelsToUnitsX(pixel);
+            let inputX = this.gOut.PixelsToUnitsX(pixel);
             let outputY = f(inputX);
-            ctx.lineTo(gOut.UnitsToPixelsX(inputX), gOut.UnitsToPixelsY(outputY));
+            this.gContext.lineTo(this.gOut.UnitsToPixelsX(inputX), this.gOut.UnitsToPixelsY(outputY));
         }
-        ctx.stroke();
+        this.gContext.stroke();
     };
 }

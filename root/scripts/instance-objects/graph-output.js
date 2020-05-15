@@ -42,6 +42,8 @@ function GraphOutput(canvasElement)
      */
     this.AddDrawCommand = function(drawer, identity)
     {
+        drawer.SetGraphOutput(this);
+
         // Existing command with same name will be overwritten.
         drawCommands[identity] = drawer;
         // Initialize the animation state for this object.
@@ -348,7 +350,7 @@ function GraphOutput(canvasElement)
             if(process.isDormant)
             {
                 if(process.isForwards)
-                    command.Draw(this, 1);
+                    command.Draw(1);
             }
             // Draw the object in its intermediate animation state.
             else
@@ -359,13 +361,13 @@ function GraphOutput(canvasElement)
                 {
                     if(interpolant > 1)
                     {
-                        command.Draw(this, 1);
+                        command.Draw(1);
                         process.isDormant = true;
                         if(process.completedCallback)
                             process.completedCallback();
                     }
                     else
-                        command.Draw(this, interpolant);
+                        command.Draw(interpolant);
                 }
                 else
                 {
@@ -377,7 +379,7 @@ function GraphOutput(canvasElement)
                             process.completedCallback();
                     }
                     else
-                        command.Draw(this, interpolant);
+                        command.Draw(interpolant);
                 }
             }
         }

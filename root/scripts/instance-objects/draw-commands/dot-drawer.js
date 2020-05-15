@@ -5,6 +5,8 @@
  */
 function DotDrawer(unitsX = 0, unitsY = 0)
 {
+    Drawer.call(this);
+
     // Define the size of the dot.
     const maxRadius = 5;
 
@@ -23,20 +25,18 @@ function DotDrawer(unitsX = 0, unitsY = 0)
     };
 
     /**
-     * Draws a function on the graph output
-     * @param {GraphOutput} graphOutput The graph output to draw to
-     * @param {interpolant} [interpolant] How much of this object should be drawn this frame
+     * Draws a dot on the graph output
+     * @param {Number} [interpolant] How much of this object should be drawn this frame
      */
-    this.Draw = function(gOut, interpolant = 1)
+    this.Draw = function(interpolant = 1)
     {
         const radius = interpolant * maxRadius;
-        const ctx = gOut.GetContext();
 
         if(radius > 0)
         {
-            ctx.beginPath();
-            ctx.arc(gOut.UnitsToPixelsX(x), gOut.UnitsToPixelsY(y), radius, 0, 2 * Math.PI);
-            ctx.fill();
+            this.gContext.beginPath();
+            this.gContext.arc(this.gOut.UnitsToPixelsX(x), this.gOut.UnitsToPixelsY(y), radius, 0, 2 * Math.PI);
+            this.gContext.fill();
         }
     };
 }
